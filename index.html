@@ -18,33 +18,54 @@
             color: #1e293b;
         }
 
-        /* 编辑模式提示 */
+        /* 顶部编辑栏 */
         .edit-mode-bar {
             background: #0a2c5c;
             color: white;
             text-align: center;
-            padding: 10px;
-            font-size: 0.9rem;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .edit-mode-bar button {
-            background: #facc15;
-            color: #0a2c5c;
             border: none;
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: 700;
             cursor: pointer;
             font-size: 0.9rem;
+            transition: all 0.2s;
         }
 
         .edit-mode-bar button:hover {
-            background: #fbbf24;
+            transform: translateY(-1px);
+        }
+
+        .btn-toggle-edit {
+            background: #facc15;
+            color: #0a2c5c;
+        }
+
+        .btn-add {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-reset {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-save {
+            background: #3b82f6;
+            color: white;
         }
 
         .container {
@@ -57,9 +78,6 @@
         .navbar {
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .nav-container {
@@ -86,7 +104,6 @@
             font-weight: 700;
             font-size: 1.4rem;
             color: #0b2b5e;
-            cursor: pointer;
         }
 
         .logo-text span {
@@ -106,7 +123,7 @@
             font-weight: 500;
         }
 
-        .btn-contact {
+        .btn-contact-nav {
             background: #0a2c5c;
             color: white !important;
             padding: 10px 22px;
@@ -147,9 +164,6 @@
             font-size: 1.2rem;
             color: #475569;
             margin-bottom: 2rem;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 5px;
         }
 
         .badge {
@@ -163,7 +177,6 @@
             align-items: center;
             gap: 6px;
             margin: 5px;
-            cursor: pointer;
             border: 1px solid #e2e8f0;
         }
 
@@ -189,16 +202,11 @@
         .section-title h2 {
             font-size: 2.2rem;
             color: #0b2b5e;
-            cursor: pointer;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 8px;
         }
 
         .section-title p {
             color: #64748b;
             margin-top: 10px;
-            cursor: pointer;
         }
 
         .underline {
@@ -231,6 +239,7 @@
         .service-card:hover {
             border-color: #2563eb;
             transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .card-icon {
@@ -253,10 +262,21 @@
 
         .service-card p {
             color: #64748b;
-            cursor: pointer;
         }
 
-        .delete-card-btn {
+        .card-click-hint {
+            font-size: 0.8rem;
+            color: #2563eb;
+            margin-top: 12px;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .service-card:hover .card-click-hint {
+            opacity: 1;
+        }
+
+        .delete-btn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -269,10 +289,14 @@
             cursor: pointer;
             display: none;
             font-size: 0.8rem;
+            z-index: 10;
         }
 
-        .service-card:hover .delete-card-btn {
-            display: block;
+        .service-card:hover .delete-btn,
+        .grant-item:hover .delete-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* 补助项目 */
@@ -300,10 +324,13 @@
             cursor: pointer;
             border: 2px solid transparent;
             position: relative;
+            transition: 0.2s;
         }
 
         .grant-item:hover {
             border-color: #2563eb;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .grant-item i {
@@ -314,31 +341,22 @@
 
         .grant-item h3 {
             margin-bottom: 10px;
-            cursor: pointer;
         }
 
         .grant-item p {
-            cursor: pointer;
             color: #64748b;
         }
 
-        .delete-grant-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
+        .grant-click-hint {
             font-size: 0.8rem;
+            color: #2563eb;
+            margin-top: 12px;
+            opacity: 0;
+            transition: 0.2s;
         }
 
-        .grant-item:hover .delete-grant-btn {
-            display: block;
+        .grant-item:hover .grant-click-hint {
+            opacity: 1;
         }
 
         /* 关于我们 */
@@ -347,7 +365,6 @@
             border-radius: 24px;
             padding: 35px;
             margin: 40px 0;
-            cursor: pointer;
         }
 
         .about-section h2 {
@@ -355,27 +372,85 @@
             margin-bottom: 15px;
         }
 
-        .about-section p {
-            cursor: pointer;
-            margin-bottom: 10px;
+        /* 编辑高亮 */
+        .editable-highlight {
+            border: 2px dashed #facc15 !important;
+            background: #fffbeb !important;
         }
 
-        /* 添加按钮 */
-        .add-btn {
-            display: block;
-            margin: 20px auto;
+        /* 模态框/详情页 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #64748b;
+        }
+
+        .modal-content h2 {
+            color: #0a2c5c;
+            margin-bottom: 15px;
+        }
+
+        .modal-content .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-content .detail-section h4 {
+            color: #2563eb;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .modal-content .detail-section p {
+            color: #475569;
+            line-height: 1.6;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            min-height: 40px;
+        }
+
+        .modal-edit-btn {
             background: #2563eb;
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 1rem;
+            padding: 10px 24px;
+            border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-        }
-
-        .add-btn:hover {
-            background: #1d4ed8;
+            margin-top: 15px;
         }
 
         /* 页脚 */
@@ -396,22 +471,16 @@
             padding: 0 20px;
         }
 
-        .footer-content p {
-            cursor: pointer;
-        }
-
-        /* 编辑高亮 */
-        .editable-highlight {
-            border: 2px dashed #facc15 !important;
-            background: #fffbeb !important;
-        }
-
         @media (max-width: 700px) {
             .hero-content h1 {
                 font-size: 2rem;
             }
             .nav-links {
                 gap: 10px;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 20px;
             }
         }
     </style>
@@ -420,13 +489,16 @@
 
     <!-- 编辑模式控制栏 -->
     <div class="edit-mode-bar">
-        <span>🔧 <strong>编辑模式</strong></span>
-        <button onclick="toggleEditMode()" id="editToggleBtn">
-            <i class="fas fa-edit"></i> 开启编辑
+        <span>🔧 <strong>编辑控制台</strong></span>
+        <button class="btn-toggle-edit" onclick="toggleEditMode()" id="editToggleBtn">
+            <i class="fas fa-edit"></i> 开启编辑模式
         </button>
-        <button onclick="addService()"><i class="fas fa-plus"></i> 添加服务</button>
-        <button onclick="addGrant()"><i class="fas fa-plus"></i> 添加补助项目</button>
-        <button onclick="resetData()" style="background:#ef4444;color:white;"><i class="fas fa-undo"></i> 恢复默认</button>
+        <button class="btn-save" onclick="saveNow()" title="手动保存所有修改">
+            <i class="fas fa-save"></i> 立即保存
+        </button>
+        <button class="btn-add" onclick="addService()"><i class="fas fa-plus"></i> 添加服务</button>
+        <button class="btn-add" onclick="addGrant()"><i class="fas fa-plus"></i> 添加补助项目</button>
+        <button class="btn-reset" onclick="resetData()"><i class="fas fa-undo"></i> 恢复默认</button>
     </div>
 
     <!-- 导航栏 -->
@@ -440,7 +512,7 @@
                 <li><a href="#home">首页</a></li>
                 <li><a href="#services">服务</a></li>
                 <li><a href="#grants">政府补助</a></li>
-                <li><a href="#about" class="btn-contact">联系咨询</a></li>
+                <li><a href="#about" class="btn-contact-nav">联系咨询</a></li>
             </ul>
         </div>
     </nav>
@@ -471,11 +543,8 @@
             <div class="underline"></div>
         </div>
         <div class="services-grid" id="servicesContainer">
-            <!-- 服务卡片由JS动态生成 -->
+            <!-- JS动态生成 -->
         </div>
-        <button class="add-btn" onclick="addService()" style="display:none;" id="addServiceBtn">
-            <i class="fas fa-plus"></i> 添加新服务
-        </button>
     </div>
 
     <!-- 政府补助 -->
@@ -487,11 +556,8 @@
                 <div class="underline"></div>
             </div>
             <div class="grant-list" id="grantsContainer">
-                <!-- 补助项目由JS动态生成 -->
+                <!-- JS动态生成 -->
             </div>
-            <button class="add-btn" onclick="addGrant()" style="display:none;" id="addGrantBtn">
-                <i class="fas fa-plus"></i> 添加补助项目
-            </button>
         </div>
     </div>
 
@@ -501,6 +567,33 @@
             <h2 class="editable" data-key="aboutTitle"><i class="fas fa-building"></i> 深圳市科邦知识产权有限公司</h2>
             <p class="editable" data-key="aboutDesc">成立于深圳，团队由专利代理师、商标代理人、项目申报专家组成。累计服务超过1200家科技企业，成功申报政府补助金额超4.6亿元。</p>
             <p class="editable" data-key="aboutAddress"><i class="fas fa-map-marker-alt" style="color:#2563eb;"></i> <strong>深圳地址：</strong>南山区科技园科苑路15号科兴科学园B栋 · 联系电话：0755-8866 8828</p>
+        </div>
+    </div>
+
+    <!-- 详情弹窗 -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h2 id="modalTitle">项目详情</h2>
+            <div class="detail-section">
+                <h4>📋 申请条件</h4>
+                <p id="modalConditions">点击下方编辑按钮添加内容</p>
+            </div>
+            <div class="detail-section">
+                <h4>💰 补助政策</h4>
+                <p id="modalPolicy">点击下方编辑按钮添加内容</p>
+            </div>
+            <div class="detail-section">
+                <h4>📝 所需材料</h4>
+                <p id="modalMaterials">点击下方编辑按钮添加内容</p>
+            </div>
+            <div class="detail-section">
+                <h4>📌 备注</h4>
+                <p id="modalNotes">点击下方编辑按钮添加内容</p>
+            </div>
+            <button class="modal-edit-btn" onclick="editModalContent()">
+                <i class="fas fa-edit"></i> 编辑此页内容
+            </button>
         </div>
     </div>
 
@@ -524,7 +617,7 @@
     </footer>
 
     <script>
-        // ============ 数据管理 ============
+        // ============ 默认数据 ============
         const defaultData = {
             companyName: '科邦<span>知识产权</span>',
             heroTitle: '科邦',
@@ -555,50 +648,58 @@
                 { icon: 'fa-star', title: '专精特新企业', desc: '市级/省级/国家级小巨人，最高补贴300万。' },
                 { icon: 'fa-flask', title: '研发费用加计扣除', desc: '研发资助、技术攻关，降低创新成本。' },
                 { icon: 'fa-file-invoice-dollar', title: '创业资助 & 贷款贴息', desc: '科技型小微企业研发补贴、贴息贷款支持。' }
-            ]
+            ],
+            // 详情页数据（每个项目的详细内容）
+            details: {}
         };
 
-        // 从localStorage加载数据
+        // ============ 数据加载与保存 ============
         function loadData() {
             const saved = localStorage.getItem('kebonData');
             if (saved) {
-                return JSON.parse(saved);
+                try {
+                    return JSON.parse(saved);
+                } catch(e) {
+                    return JSON.parse(JSON.stringify(defaultData));
+                }
             }
             return JSON.parse(JSON.stringify(defaultData));
         }
 
-        // 保存数据
         function saveData(data) {
             localStorage.setItem('kebonData', JSON.stringify(data));
+            console.log('✅ 数据已保存！时间：' + new Date().toLocaleTimeString());
         }
 
         let appData = loadData();
         let editMode = false;
+        let currentDetailKey = null; // 当前打开的详情项目key
 
         // ============ 渲染函数 ============
         function renderAll() {
-            // 渲染可编辑文本
+            // 渲染文本
             document.querySelectorAll('.editable[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (appData[key]) {
+                if (appData[key] !== undefined) {
                     el.innerHTML = appData[key];
                 }
             });
 
-            // 渲染服务卡片
             renderServices();
-            // 渲染补助项目
             renderGrants();
         }
 
         function renderServices() {
             const container = document.getElementById('servicesContainer');
             container.innerHTML = appData.services.map((service, index) => `
-                <div class="service-card" onclick="if(editMode) editService(${index})">
-                    ${editMode ? `<button class="delete-card-btn" onclick="event.stopPropagation(); deleteService(${index})">×</button>` : ''}
+                <div class="service-card ${editMode ? 'editable-highlight' : ''}" 
+                     onclick="openDetail('service', ${index})"
+                     title="点击查看详情">
+                    ${editMode ? `<button class="delete-btn" onclick="event.stopPropagation(); deleteService(${index})">×</button>` : ''}
                     <div class="card-icon"><i class="fas ${service.icon}"></i></div>
                     <h3>${service.title}</h3>
                     <p>${service.desc}</p>
+                    <div class="card-click-hint">📖 点击查看详情 →</div>
                 </div>
             `).join('');
         }
@@ -606,11 +707,14 @@
         function renderGrants() {
             const container = document.getElementById('grantsContainer');
             container.innerHTML = appData.grants.map((grant, index) => `
-                <div class="grant-item" onclick="if(editMode) editGrant(${index})">
-                    ${editMode ? `<button class="delete-grant-btn" onclick="event.stopPropagation(); deleteGrant(${index})">×</button>` : ''}
+                <div class="grant-item ${editMode ? 'editable-highlight' : ''}" 
+                     onclick="openDetail('grant', ${index})"
+                     title="点击查看详情">
+                    ${editMode ? `<button class="delete-btn" onclick="event.stopPropagation(); deleteGrant(${index})">×</button>` : ''}
                     <i class="fas ${grant.icon}"></i>
                     <h3>${grant.title}</h3>
                     <p>${grant.desc}</p>
+                    <div class="grant-click-hint">📖 点击查看详情 →</div>
                 </div>
             `).join('');
         }
@@ -619,33 +723,27 @@
         function toggleEditMode() {
             editMode = !editMode;
             const btn = document.getElementById('editToggleBtn');
-            const addServiceBtn = document.getElementById('addServiceBtn');
-            const addGrantBtn = document.getElementById('addGrantBtn');
 
             if (editMode) {
-                btn.innerHTML = '<i class="fas fa-check"></i> 关闭编辑';
+                btn.innerHTML = '<i class="fas fa-check"></i> 关闭编辑模式';
                 btn.style.background = '#10b981';
                 btn.style.color = 'white';
-                addServiceBtn.style.display = 'block';
-                addGrantBtn.style.display = 'block';
-                // 给所有可编辑元素添加高亮
-                document.querySelectorAll('.editable, .service-card, .grant-item').forEach(el => {
-                    el.classList.add('editable-highlight');
-                });
-                alert('✅ 编辑模式已开启！\n\n• 点击任意文字直接修改\n• 点击服务卡片或补助项目修改\n• 悬停卡片可看到删除按钮\n• 使用顶部按钮添加新项目');
+                alert('✅ 编辑模式已开启！\n\n📌 操作说明：\n• 点击任意文字直接修改\n• 点击服务/补助卡片查看详情\n• 在详情页可编辑完整内容\n• 修改后点击"立即保存"确保不丢失');
             } else {
-                btn.innerHTML = '<i class="fas fa-edit"></i> 开启编辑';
+                btn.innerHTML = '<i class="fas fa-edit"></i> 开启编辑模式';
                 btn.style.background = '#facc15';
                 btn.style.color = '#0a2c5c';
-                addServiceBtn.style.display = 'none';
-                addGrantBtn.style.display = 'none';
-                document.querySelectorAll('.editable-highlight').forEach(el => {
-                    el.classList.remove('editable-highlight');
-                });
+                // 关闭编辑模式时自动保存
+                saveData(appData);
             }
 
-            saveData(appData);
             renderAll();
+        }
+
+        // 手动保存
+        function saveNow() {
+            saveData(appData);
+            alert('✅ 所有修改已保存成功！');
         }
 
         // ============ 编辑文本 ============
@@ -661,7 +759,95 @@
                     appData[key] = newText.trim();
                     saveData(appData);
                     renderAll();
+                    alert('✅ 修改已保存！');
                 }
+            }
+        });
+
+        // ============ 详情弹窗 ============
+        function openDetail(type, index) {
+            let item, detailKey;
+            if (type === 'grant') {
+                item = appData.grants[index];
+                detailKey = 'grant_' + index;
+            } else {
+                item = appData.services[index];
+                detailKey = 'service_' + index;
+            }
+
+            currentDetailKey = detailKey;
+
+            // 初始化详情数据（如果不存在）
+            if (!appData.details[detailKey]) {
+                appData.details[detailKey] = {
+                    conditions: '请编辑添加申请条件...',
+                    policy: '请编辑添加补助政策...',
+                    materials: '请编辑添加所需材料...',
+                    notes: '请编辑添加备注...'
+                };
+            }
+
+            const detail = appData.details[detailKey];
+
+            document.getElementById('modalTitle').textContent = '📋 ' + item.title;
+            document.getElementById('modalConditions').textContent = detail.conditions;
+            document.getElementById('modalPolicy').textContent = detail.policy;
+            document.getElementById('modalMaterials').textContent = detail.materials;
+            document.getElementById('modalNotes').textContent = detail.notes;
+
+            document.getElementById('detailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+            document.body.style.overflow = '';
+            // 关闭时自动保存
+            saveData(appData);
+        }
+
+        function editModalContent() {
+            if (!currentDetailKey) return;
+
+            const detail = appData.details[currentDetailKey];
+            const newConditions = prompt('申请条件：', detail.conditions);
+            if (newConditions === null) return;
+            const newPolicy = prompt('补助政策：', detail.policy);
+            if (newPolicy === null) return;
+            const newMaterials = prompt('所需材料：', detail.materials);
+            if (newMaterials === null) return;
+            const newNotes = prompt('备注：', detail.notes);
+            if (newNotes === null) return;
+
+            appData.details[currentDetailKey] = {
+                conditions: newConditions,
+                policy: newPolicy,
+                materials: newMaterials,
+                notes: newNotes
+            };
+
+            saveData(appData);
+
+            // 更新弹窗显示
+            document.getElementById('modalConditions').textContent = newConditions;
+            document.getElementById('modalPolicy').textContent = newPolicy;
+            document.getElementById('modalMaterials').textContent = newMaterials;
+            document.getElementById('modalNotes').textContent = newNotes;
+
+            alert('✅ 详情内容已更新并保存！');
+        }
+
+        // 点击遮罩关闭
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ESC关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
             }
         });
 
@@ -682,13 +868,15 @@
             };
             saveData(appData);
             renderAll();
+            alert('✅ 服务已更新！');
         }
 
         function deleteService(index) {
-            if (confirm('确定删除这个服务吗？')) {
+            if (confirm('确定删除这个服务吗？此操作不可恢复！')) {
                 appData.services.splice(index, 1);
                 saveData(appData);
                 renderAll();
+                alert('✅ 服务已删除！');
             }
         }
 
@@ -710,6 +898,7 @@
             });
             saveData(appData);
             renderAll();
+            alert('✅ 新服务已添加！');
         }
 
         // ============ 编辑补助项目 ============
@@ -729,13 +918,15 @@
             };
             saveData(appData);
             renderAll();
+            alert('✅ 补助项目已更新！');
         }
 
         function deleteGrant(index) {
-            if (confirm('确定删除这个补助项目吗？')) {
+            if (confirm('确定删除这个补助项目吗？此操作不可恢复！')) {
                 appData.grants.splice(index, 1);
                 saveData(appData);
                 renderAll();
+                alert('✅ 补助项目已删除！');
             }
         }
 
@@ -757,23 +948,33 @@
             });
             saveData(appData);
             renderAll();
+            alert('✅ 新补助项目已添加！');
         }
 
         // ============ 恢复默认 ============
         function resetData() {
-            if (confirm('确定恢复为默认内容吗？所有修改将丢失！')) {
+            if (confirm('⚠️ 确定恢复为默认内容吗？\n\n所有修改（包括详情页内容）将丢失！')) {
                 localStorage.removeItem('kebonData');
                 appData = JSON.parse(JSON.stringify(defaultData));
                 renderAll();
-                alert('已恢复默认内容！');
+                alert('✅ 已恢复默认内容！');
             }
         }
+
+        // ============ 页面关闭前自动保存 ============
+        window.addEventListener('beforeunload', function() {
+            saveData(appData);
+        });
 
         // ============ 初始化 ============
         renderAll();
 
         console.log('✅ 深圳市科邦知识产权有限公司网站已就绪');
-        console.log('💡 点击顶部"开启编辑"按钮即可修改所有内容');
+        console.log('💡 功能说明：');
+        console.log('  1. 点击"开启编辑模式"编辑文字');
+        console.log('  2. 点击任意卡片查看详情页');
+        console.log('  3. 在详情页可编辑完整内容');
+        console.log('  4. 点击"立即保存"确保不丢失');
         console.log('📦 数据保存在浏览器本地存储中');
     </script>
 </body>
