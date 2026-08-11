@@ -1,492 +1,780 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>深圳市科邦知识产权有限公司 | 知识产权 · 政府补助</title>
-  <!-- 引入 Font Awesome 6 图标库 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深圳市科邦知识产权有限公司</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-      background-color: #f8fafc;
-      color: #1e293b;
-      line-height: 1.5;
-    }
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+        /* 编辑模式提示 */
+        .edit-mode-bar {
+            background: #0a2c5c;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
 
-    /* 导航栏 */
-    .navbar {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(0, 32, 96, 0.08);
-    }
+        .edit-mode-bar button {
+            background: #facc15;
+            color: #0a2c5c;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
 
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+        .edit-mode-bar button:hover {
+            background: #fbbf24;
+        }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .logo-icon {
-      font-size: 2.2rem;
-      color: #0a2c5c;
-      background: linear-gradient(135deg, #e9f0ff 0%, #d4e2ff 100%);
-      border-radius: 12px;
-      padding: 6px 10px;
-    }
+        /* 导航栏 */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .logo-text {
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
-      color: #0b2b5e;
-    }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .logo-text span {
-      color: #2563eb;
-      font-weight: 800;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-    }
+        .logo-icon {
+            font-size: 2rem;
+            color: #0a2c5c;
+        }
 
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 500;
-      color: #334155;
-      font-size: 1rem;
-      transition: 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #0b2b5e;
+            cursor: pointer;
+        }
 
-    .nav-links a:hover {
-      color: #2563eb;
-    }
+        .logo-text span {
+            color: #2563eb;
+        }
 
-    .btn-contact {
-      background: #0a2c5c;
-      color: white !important;
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-weight: 600;
-      box-shadow: 0 6px 14px rgba(10, 44, 92, 0.25);
-      transition: all 0.3s;
-    }
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
 
-    .btn-contact:hover {
-      background: #123f7a;
-      transform: translateY(-2px);
-      color: white !important;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
+        }
 
-    /* 英雄区域 */
-    .hero {
-      background: linear-gradient(105deg, #f0f4ff 0%, #ffffff 70%);
-      padding: 60px 0;
-    }
+        .btn-contact {
+            background: #0a2c5c;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 30px;
+        }
 
-    .hero-grid {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 40px;
-    }
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(105deg, #f0f4ff 0%, #ffffff 70%);
+            padding: 60px 0;
+        }
 
-    .hero-content {
-      flex: 1 1 450px;
-    }
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
 
-    .hero-content h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: #0a2c5c;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
+        .hero-content {
+            flex: 1 1 450px;
+        }
 
-    .hero-highlight {
-      color: #2563eb;
-      border-bottom: 5px solid #facc15;
-      display: inline-block;
-    }
+        .hero-content h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0a2c5c;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
 
-    .hero-desc {
-      font-size: 1.2rem;
-      color: #475569;
-      margin-bottom: 2rem;
-    }
+        .hero-highlight {
+            color: #2563eb;
+            border-bottom: 5px solid #facc15;
+        }
 
-    .service-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 2rem;
-    }
+        .hero-desc {
+            font-size: 1.2rem;
+            color: #475569;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+        }
 
-    .badge {
-      background: white;
-      border-radius: 40px;
-      padding: 8px 20px;
-      font-weight: 600;
-      color: #1e3a8a;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid #e2e8f0;
-    }
+        .badge {
+            background: white;
+            border-radius: 40px;
+            padding: 8px 20px;
+            font-weight: 600;
+            color: #1e3a8a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
 
-    .hero-image {
-      flex: 1 1 400px;
-      background: linear-gradient(145deg, #d9e6ff, #ffffff);
-      border-radius: 32px;
-      padding: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 25px 40px -15px rgba(0,62,128,0.2);
-    }
+        .hero-image {
+            flex: 1 1 400px;
+            background: linear-gradient(145deg, #d9e6ff, #ffffff);
+            border-radius: 32px;
+            padding: 30px;
+            text-align: center;
+        }
 
-    .hero-image i {
-      font-size: 8rem;
-      color: #0a2c5c;
-      opacity: 0.9;
-    }
+        .hero-image i {
+            font-size: 8rem;
+            color: #0a2c5c;
+        }
 
-    /* 区块标题 */
-    .section-title {
-      text-align: center;
-      margin: 70px 0 40px;
-    }
+        /* 区块标题 */
+        .section-title {
+            text-align: center;
+            margin: 70px 0 40px;
+        }
 
-    .section-title h2 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #0b2b5e;
-    }
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #0b2b5e;
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 8px;
+        }
 
-    .section-title p {
-      color: #64748b;
-      margin-top: 10px;
-    }
+        .section-title p {
+            color: #64748b;
+            margin-top: 10px;
+            cursor: pointer;
+        }
 
-    .underline {
-      width: 80px;
-      height: 4px;
-      background: #2563eb;
-      margin: 12px auto 0;
-      border-radius: 4px;
-    }
+        .underline {
+            width: 80px;
+            height: 4px;
+            background: #2563eb;
+            margin: 12px auto 0;
+            border-radius: 4px;
+        }
 
-    /* 服务卡片 */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 28px;
-      margin-top: 20px;
-    }
+        /* 服务卡片 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 28px;
+            margin-top: 20px;
+        }
 
-    .service-card {
-      background: white;
-      border-radius: 24px;
-      padding: 28px 22px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
-      transition: 0.2s ease;
-      border: 1px solid #f1f5f9;
-    }
+        .service-card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px 22px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+            border: 2px solid transparent;
+            transition: 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
 
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 25px 35px rgba(0,69,145,0.12);
-      border-color: #bfdbfe;
-    }
+        .service-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-5px);
+        }
 
-    .card-icon {
-      font-size: 2.4rem;
-      color: #2563eb;
-      background: #eff6ff;
-      width: 65px;
-      height: 65px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 18px;
-      margin-bottom: 20px;
-    }
+        .card-icon {
+            font-size: 2.4rem;
+            color: #2563eb;
+            background: #eff6ff;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            margin-bottom: 20px;
+        }
 
-    .service-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      color: #0f2b4b;
-    }
+        .service-card h3 {
+            margin-bottom: 10px;
+            color: #0f2b4b;
+        }
 
-    /* 补助项目区域 */
-    .grants-section {
-      background: #f0f4fe;
-      border-radius: 40px;
-      padding: 50px 30px;
-      margin: 50px 0;
-    }
+        .service-card p {
+            color: #64748b;
+            cursor: pointer;
+        }
 
-    .grant-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      justify-content: center;
-    }
+        .delete-card-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            font-size: 0.8rem;
+        }
 
-    .grant-item {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      flex: 1 1 250px;
-      max-width: 320px;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.04);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+        .service-card:hover .delete-card-btn {
+            display: block;
+        }
 
-    .grant-item i {
-      font-size: 2.5rem;
-      color: #0a2c5c;
-      margin-bottom: 15px;
-    }
+        /* 补助项目 */
+        .grants-section {
+            background: #f0f4fe;
+            border-radius: 40px;
+            padding: 50px 30px;
+            margin: 50px 0;
+        }
 
-    /* 关于我们 & GitHub 提示 */
-    .about-github {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin: 40px 0 60px;
-      align-items: center;
-    }
+        .grant-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
 
-    .about-text {
-      flex: 2;
-      background: white;
-      border-radius: 24px;
-      padding: 35px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-    }
+        .grant-item {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            flex: 1 1 250px;
+            max-width: 320px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+        }
 
-    .github-card {
-      flex: 1;
-      background: #0a2c5c;
-      color: white;
-      border-radius: 24px;
-      padding: 35px;
-      text-align: center;
-    }
+        .grant-item:hover {
+            border-color: #2563eb;
+        }
 
-    .github-card i {
-      font-size: 3rem;
-      margin-bottom: 15px;
-    }
+        .grant-item i {
+            font-size: 2.5rem;
+            color: #0a2c5c;
+            margin-bottom: 15px;
+        }
 
-    .github-card a {
-      color: #facc15;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        .grant-item h3 {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
 
-    footer {
-      background: #0b1e33;
-      color: #cbd5e1;
-      padding: 45px 0 25px;
-      margin-top: 60px;
-    }
+        .grant-item p {
+            cursor: pointer;
+            color: #64748b;
+        }
 
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 25px;
-    }
+        .delete-grant-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            font-size: 0.8rem;
+        }
 
-    @media (max-width: 700px) {
-      .nav-links {
-        gap: 15px;
-      }
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-    }
-  </style>
+        .grant-item:hover .delete-grant-btn {
+            display: block;
+        }
+
+        /* 关于我们 */
+        .about-section {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            margin: 40px 0;
+            cursor: pointer;
+        }
+
+        .about-section h2 {
+            color: #0a2c5c;
+            margin-bottom: 15px;
+        }
+
+        .about-section p {
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        /* 添加按钮 */
+        .add-btn {
+            display: block;
+            margin: 20px auto;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #0b1e33;
+            color: #cbd5e1;
+            padding: 45px 0 25px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content p {
+            cursor: pointer;
+        }
+
+        /* 编辑高亮 */
+        .editable-highlight {
+            border: 2px dashed #facc15 !important;
+            background: #fffbeb !important;
+        }
+
+        @media (max-width: 700px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        <div class="logo-icon">
-          <i class="fas fa-shield-haltered"></i>
-        </div>
-        <div class="logo-text">
-          科邦<span>知识产权</span>
-        </div>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#home"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="#services"><i class="fas fa-briefcase"></i> 服务</a></li>
-        <li><a href="#grants"><i class="fas fa-hand-holding-usd"></i> 政府补助</a></li>
-        <li><a href="#contact" class="btn-contact"><i class="fas fa-phone-alt"></i> 联系咨询</a></li>
-      </ul>
-    </div>
-  </nav>
 
-  <main>
-    <!-- 英雄区 -->
-    <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <h1>深圳<span class="hero-highlight">科邦</span><br>知识产权 · 政府补助专家</h1>
-          <p class="hero-desc">商标注册、专利申请、版权保护，以及高新技术企业认定、专精特新补贴申报。助力深圳企业获得政策红利。</p>
-          <div class="service-badges">
-            <div class="badge"><i class="fas fa-check-circle"></i> 商标极速注册</div>
-            <div class="badge"><i class="fas fa-check-circle"></i> 发明专利布局</div>
-            <div class="badge"><i class="fas fa-check-circle"></i> 政府资金申报</div>
-          </div>
+    <!-- 编辑模式控制栏 -->
+    <div class="edit-mode-bar">
+        <span>🔧 <strong>编辑模式</strong></span>
+        <button onclick="toggleEditMode()" id="editToggleBtn">
+            <i class="fas fa-edit"></i> 开启编辑
+        </button>
+        <button onclick="addService()"><i class="fas fa-plus"></i> 添加服务</button>
+        <button onclick="addGrant()"><i class="fas fa-plus"></i> 添加补助项目</button>
+        <button onclick="resetData()" style="background:#ef4444;color:white;"><i class="fas fa-undo"></i> 恢复默认</button>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-shield-haltered"></i></div>
+                <div class="logo-text editable" data-key="companyName">科邦<span>知识产权</span></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#services">服务</a></li>
+                <li><a href="#grants">政府补助</a></li>
+                <li><a href="#about" class="btn-contact">联系咨询</a></li>
+            </ul>
         </div>
-        <div class="hero-image">
-          <i class="fas fa-building-columns"></i>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>深圳<span class="hero-highlight editable" data-key="heroTitle">科邦</span><br>知识产权 · 政府补助专家</h1>
+                <p class="hero-desc editable" data-key="heroDesc">商标注册、专利申请、版权保护，以及高新技术企业认定、专精特新补贴申报。助力深圳企业获得政策红利。</p>
+                <div id="heroBadges">
+                    <span class="badge editable" data-key="badge1"><i class="fas fa-check-circle"></i> 商标极速注册</span>
+                    <span class="badge editable" data-key="badge2"><i class="fas fa-check-circle"></i> 发明专利布局</span>
+                    <span class="badge editable" data-key="badge3"><i class="fas fa-check-circle"></i> 政府资金申报</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-building-columns"></i>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- 核心服务 -->
+    <!-- 服务区域 -->
     <div class="container" id="services">
-      <div class="section-title">
-        <h2>知识产权一站式服务</h2>
-        <p>保护创新成果，构建竞争壁垒</p>
-        <div class="underline"></div>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="card-icon"><i class="fas fa-trademark"></i></div>
-          <h3>商标注册</h3>
-          <p>国内商标、马德里国际商标，风险评估与驳回复审，提高授权率。</p>
+        <div class="section-title">
+            <h2 class="editable" data-key="servicesTitle">知识产权一站式服务</h2>
+            <p class="editable" data-key="servicesSubtitle">保护创新成果，构建竞争壁垒</p>
+            <div class="underline"></div>
         </div>
-        <div class="service-card">
-          <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
-          <h3>专利申请</h3>
-          <p>发明专利、实用新型、外观设计，技术挖掘与专利布局。</p>
+        <div class="services-grid" id="servicesContainer">
+            <!-- 服务卡片由JS动态生成 -->
         </div>
-        <div class="service-card">
-          <div class="card-icon"><i class="fas fa-copyright"></i></div>
-          <h3>版权登记</h3>
-          <p>软件著作权、作品登记，快速确权与维权支持。</p>
-        </div>
-        <div class="service-card">
-          <div class="card-icon"><i class="fas fa-gavel"></i></div>
-          <h3>知识产权诉讼</h3>
-          <p>侵权调查、行政查处、司法诉讼，捍卫合法权益。</p>
-        </div>
-      </div>
+        <button class="add-btn" onclick="addService()" style="display:none;" id="addServiceBtn">
+            <i class="fas fa-plus"></i> 添加新服务
+        </button>
     </div>
 
-    <!-- 政府补助项目 -->
+    <!-- 政府补助 -->
     <div class="container" id="grants">
-      <div class="grants-section">
-        <div class="section-title" style="margin-top:0;">
-          <h2>政府补助项目申报</h2>
-          <p>精准匹配政策，获取百万级资金支持</p>
-          <div class="underline"></div>
+        <div class="grants-section">
+            <div class="section-title" style="margin-top:0;">
+                <h2 class="editable" data-key="grantsTitle">政府补助项目申报</h2>
+                <p class="editable" data-key="grantsSubtitle">精准匹配政策，获取百万级资金支持</p>
+                <div class="underline"></div>
+            </div>
+            <div class="grant-list" id="grantsContainer">
+                <!-- 补助项目由JS动态生成 -->
+            </div>
+            <button class="add-btn" onclick="addGrant()" style="display:none;" id="addGrantBtn">
+                <i class="fas fa-plus"></i> 添加补助项目
+            </button>
         </div>
-        <div class="grant-list">
-          <div class="grant-item">
-            <i class="fas fa-microchip"></i>
-            <h3>国家高新技术企业</h3>
-            <p>认定奖励 + 所得税优惠，深圳市/区叠加资助。</p>
-          </div>
-          <div class="grant-item">
-            <i class="fas fa-star"></i>
-            <h3>专精特新企业</h3>
-            <p>市级/省级/国家级小巨人，最高补贴300万。</p>
-          </div>
-          <div class="grant-item">
-            <i class="fas fa-flask"></i>
-            <h3>研发费用加计扣除</h3>
-            <p>研发资助、技术攻关，降低创新成本。</p>
-          </div>
-          <div class="grant-item">
-            <i class="fas fa-file-invoice-dollar"></i>
-            <h3>创业资助 & 贷款贴息</h3>
-            <p>科技型小微企业研发补贴、贴息贷款支持。</p>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- 关于科邦 + GitHub 信息 -->
-    <div class="container about-github">
-      <div class="about-text">
-        <h2 style="color:#0a2c5c; margin-bottom:15px;"><i class="fas fa-building"></i> 深圳市科邦知识产权有限公司</h2>
-        <p style="font-size:1.05rem; margin-bottom:15px;">成立于深圳，团队由专利代理师、商标代理人、项目申报专家组成。累计服务超过1200家科技企业，成功申报政府补助金额超4.6亿元。</p>
-        <p><i class="fas fa-map-marker-alt" style="color:#2563eb;"></i> <strong>深圳地址：</strong>南山区科技园科苑路15号科兴科学园B栋 · 联系电话：0755-8866 8828</p>
-      </div>
-      <div class="github-card">
-        <i class="fab fa-github"></i>
-        <h3 style="margin-bottom:12px;">GitHub 开源呈现</h3>
-        <p style="margin-bottom:18px;">本网站代码托管于GitHub，展示前端开发与知识产权数字化实践。</p>
-        <p><a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> github.com/kebon-ip/shenzhen</a></p>
-        <p style="font-size:0.85rem; margin-top:15px; opacity:0.8;">© 科邦知识产权 · 持续集成部署</p>
-      </div>
+    <!-- 关于我们 -->
+    <div class="container" id="about">
+        <div class="about-section">
+            <h2 class="editable" data-key="aboutTitle"><i class="fas fa-building"></i> 深圳市科邦知识产权有限公司</h2>
+            <p class="editable" data-key="aboutDesc">成立于深圳，团队由专利代理师、商标代理人、项目申报专家组成。累计服务超过1200家科技企业，成功申报政府补助金额超4.6亿元。</p>
+            <p class="editable" data-key="aboutAddress"><i class="fas fa-map-marker-alt" style="color:#2563eb;"></i> <strong>深圳地址：</strong>南山区科技园科苑路15号科兴科学园B栋 · 联系电话：0755-8866 8828</p>
+        </div>
     </div>
-  </main>
 
-  <footer>
-    <div class="container footer-content">
-      <div>
-        <h4 style="color:white; margin-bottom:10px;"><i class="fas fa-shield-alt"></i> 科邦知识产权</h4>
-        <p>专业 · 高效 · 诚信</p>
-        <p style="margin-top:8px;">政府补助申报 | 知识产权代理</p>
-      </div>
-      <div>
-        <p><i class="fas fa-envelope"></i> info@kebonip.com</p>
-        <p><i class="fas fa-phone"></i> 0755-8866 8828</p>
-        <p><i class="fas fa-clock"></i> 周一至周五 9:00-18:00</p>
-      </div>
-      <div>
-        <p style="font-weight:600; color:white;">关注我们</p>
-        <p><i class="fab fa-weixin"></i> 科邦知识产权</p>
-        <p><i class="fab fa-github"></i> GitHub 项目仓库</p>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:30px; font-size:0.9rem; color:#94a3b8;">
-      © 2025 深圳市科邦知识产权有限公司 | 粤ICP备XXXXXXXX号 | 托管于 GitHub Pages
-    </div>
-  </footer>
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h4 style="color:white;margin-bottom:10px;"><i class="fas fa-shield-alt"></i> <span class="editable" data-key="footerName">科邦知识产权</span></h4>
+                <p class="editable" data-key="footerSlogan">专业 · 高效 · 诚信</p>
+                <p class="editable" data-key="footerDesc">政府补助申报 | 知识产权代理</p>
+            </div>
+            <div>
+                <p class="editable" data-key="footerEmail"><i class="fas fa-envelope"></i> info@kebonip.com</p>
+                <p class="editable" data-key="footerPhone"><i class="fas fa-phone"></i> 0755-8866 8828</p>
+                <p><i class="fas fa-clock"></i> 周一至周五 9:00-18:00</p>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:30px;color:#94a3b8;">
+            © 2025 深圳市科邦知识产权有限公司 | 托管于 GitHub Pages
+        </div>
+    </footer>
+
+    <script>
+        // ============ 数据管理 ============
+        const defaultData = {
+            companyName: '科邦<span>知识产权</span>',
+            heroTitle: '科邦',
+            heroDesc: '商标注册、专利申请、版权保护，以及高新技术企业认定、专精特新补贴申报。助力深圳企业获得政策红利。',
+            badge1: '<i class="fas fa-check-circle"></i> 商标极速注册',
+            badge2: '<i class="fas fa-check-circle"></i> 发明专利布局',
+            badge3: '<i class="fas fa-check-circle"></i> 政府资金申报',
+            servicesTitle: '知识产权一站式服务',
+            servicesSubtitle: '保护创新成果，构建竞争壁垒',
+            grantsTitle: '政府补助项目申报',
+            grantsSubtitle: '精准匹配政策，获取百万级资金支持',
+            aboutTitle: '<i class="fas fa-building"></i> 深圳市科邦知识产权有限公司',
+            aboutDesc: '成立于深圳，团队由专利代理师、商标代理人、项目申报专家组成。累计服务超过1200家科技企业，成功申报政府补助金额超4.6亿元。',
+            aboutAddress: '<i class="fas fa-map-marker-alt" style="color:#2563eb;"></i> <strong>深圳地址：</strong>南山区科技园科苑路15号科兴科学园B栋 · 联系电话：0755-8866 8828',
+            footerName: '科邦知识产权',
+            footerSlogan: '专业 · 高效 · 诚信',
+            footerDesc: '政府补助申报 | 知识产权代理',
+            footerEmail: '<i class="fas fa-envelope"></i> info@kebonip.com',
+            footerPhone: '<i class="fas fa-phone"></i> 0755-8866 8828',
+            services: [
+                { icon: 'fa-trademark', title: '商标注册', desc: '国内商标、马德里国际商标，风险评估与驳回复审，提高授权率。' },
+                { icon: 'fa-lightbulb', title: '专利申请', desc: '发明专利、实用新型、外观设计，技术挖掘与专利布局。' },
+                { icon: 'fa-copyright', title: '版权登记', desc: '软件著作权、作品登记，快速确权与维权支持。' },
+                { icon: 'fa-gavel', title: '知识产权诉讼', desc: '侵权调查、行政查处、司法诉讼，捍卫合法权益。' }
+            ],
+            grants: [
+                { icon: 'fa-microchip', title: '国家高新技术企业', desc: '认定奖励 + 所得税优惠，深圳市/区叠加资助。' },
+                { icon: 'fa-star', title: '专精特新企业', desc: '市级/省级/国家级小巨人，最高补贴300万。' },
+                { icon: 'fa-flask', title: '研发费用加计扣除', desc: '研发资助、技术攻关，降低创新成本。' },
+                { icon: 'fa-file-invoice-dollar', title: '创业资助 & 贷款贴息', desc: '科技型小微企业研发补贴、贴息贷款支持。' }
+            ]
+        };
+
+        // 从localStorage加载数据
+        function loadData() {
+            const saved = localStorage.getItem('kebonData');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return JSON.parse(JSON.stringify(defaultData));
+        }
+
+        // 保存数据
+        function saveData(data) {
+            localStorage.setItem('kebonData', JSON.stringify(data));
+        }
+
+        let appData = loadData();
+        let editMode = false;
+
+        // ============ 渲染函数 ============
+        function renderAll() {
+            // 渲染可编辑文本
+            document.querySelectorAll('.editable[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (appData[key]) {
+                    el.innerHTML = appData[key];
+                }
+            });
+
+            // 渲染服务卡片
+            renderServices();
+            // 渲染补助项目
+            renderGrants();
+        }
+
+        function renderServices() {
+            const container = document.getElementById('servicesContainer');
+            container.innerHTML = appData.services.map((service, index) => `
+                <div class="service-card" onclick="if(editMode) editService(${index})">
+                    ${editMode ? `<button class="delete-card-btn" onclick="event.stopPropagation(); deleteService(${index})">×</button>` : ''}
+                    <div class="card-icon"><i class="fas ${service.icon}"></i></div>
+                    <h3>${service.title}</h3>
+                    <p>${service.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderGrants() {
+            const container = document.getElementById('grantsContainer');
+            container.innerHTML = appData.grants.map((grant, index) => `
+                <div class="grant-item" onclick="if(editMode) editGrant(${index})">
+                    ${editMode ? `<button class="delete-grant-btn" onclick="event.stopPropagation(); deleteGrant(${index})">×</button>` : ''}
+                    <i class="fas ${grant.icon}"></i>
+                    <h3>${grant.title}</h3>
+                    <p>${grant.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // ============ 编辑模式 ============
+        function toggleEditMode() {
+            editMode = !editMode;
+            const btn = document.getElementById('editToggleBtn');
+            const addServiceBtn = document.getElementById('addServiceBtn');
+            const addGrantBtn = document.getElementById('addGrantBtn');
+
+            if (editMode) {
+                btn.innerHTML = '<i class="fas fa-check"></i> 关闭编辑';
+                btn.style.background = '#10b981';
+                btn.style.color = 'white';
+                addServiceBtn.style.display = 'block';
+                addGrantBtn.style.display = 'block';
+                // 给所有可编辑元素添加高亮
+                document.querySelectorAll('.editable, .service-card, .grant-item').forEach(el => {
+                    el.classList.add('editable-highlight');
+                });
+                alert('✅ 编辑模式已开启！\n\n• 点击任意文字直接修改\n• 点击服务卡片或补助项目修改\n• 悬停卡片可看到删除按钮\n• 使用顶部按钮添加新项目');
+            } else {
+                btn.innerHTML = '<i class="fas fa-edit"></i> 开启编辑';
+                btn.style.background = '#facc15';
+                btn.style.color = '#0a2c5c';
+                addServiceBtn.style.display = 'none';
+                addGrantBtn.style.display = 'none';
+                document.querySelectorAll('.editable-highlight').forEach(el => {
+                    el.classList.remove('editable-highlight');
+                });
+            }
+
+            saveData(appData);
+            renderAll();
+        }
+
+        // ============ 编辑文本 ============
+        document.addEventListener('click', function(e) {
+            if (!editMode) return;
+
+            const editableEl = e.target.closest('.editable[data-key]');
+            if (editableEl) {
+                const key = editableEl.getAttribute('data-key');
+                const currentText = editableEl.innerText;
+                const newText = prompt('修改内容：', currentText);
+                if (newText !== null && newText.trim() !== '') {
+                    appData[key] = newText.trim();
+                    saveData(appData);
+                    renderAll();
+                }
+            }
+        });
+
+        // ============ 编辑服务 ============
+        function editService(index) {
+            if (!editMode) return;
+            const service = appData.services[index];
+            const newTitle = prompt('服务名称：', service.title);
+            if (newTitle === null) return;
+            const newDesc = prompt('服务描述：', service.desc);
+            if (newDesc === null) return;
+            const newIcon = prompt('图标代码（如 fa-trademark）：', service.icon);
+
+            appData.services[index] = {
+                icon: newIcon || service.icon,
+                title: newTitle,
+                desc: newDesc
+            };
+            saveData(appData);
+            renderAll();
+        }
+
+        function deleteService(index) {
+            if (confirm('确定删除这个服务吗？')) {
+                appData.services.splice(index, 1);
+                saveData(appData);
+                renderAll();
+            }
+        }
+
+        function addService() {
+            if (!editMode) {
+                alert('请先开启编辑模式！');
+                return;
+            }
+            const title = prompt('新服务名称：', '新服务');
+            if (!title) return;
+            const desc = prompt('服务描述：', '请输入描述');
+            if (!desc) return;
+            const icon = prompt('图标代码（如 fa-star）：', 'fa-star');
+
+            appData.services.push({
+                icon: icon || 'fa-star',
+                title: title,
+                desc: desc
+            });
+            saveData(appData);
+            renderAll();
+        }
+
+        // ============ 编辑补助项目 ============
+        function editGrant(index) {
+            if (!editMode) return;
+            const grant = appData.grants[index];
+            const newTitle = prompt('项目名称：', grant.title);
+            if (newTitle === null) return;
+            const newDesc = prompt('项目描述：', grant.desc);
+            if (newDesc === null) return;
+            const newIcon = prompt('图标代码（如 fa-microchip）：', grant.icon);
+
+            appData.grants[index] = {
+                icon: newIcon || grant.icon,
+                title: newTitle,
+                desc: newDesc
+            };
+            saveData(appData);
+            renderAll();
+        }
+
+        function deleteGrant(index) {
+            if (confirm('确定删除这个补助项目吗？')) {
+                appData.grants.splice(index, 1);
+                saveData(appData);
+                renderAll();
+            }
+        }
+
+        function addGrant() {
+            if (!editMode) {
+                alert('请先开启编辑模式！');
+                return;
+            }
+            const title = prompt('项目名称：', '新补助项目');
+            if (!title) return;
+            const desc = prompt('项目描述：', '请输入描述');
+            if (!desc) return;
+            const icon = prompt('图标代码（如 fa-star）：', 'fa-star');
+
+            appData.grants.push({
+                icon: icon || 'fa-star',
+                title: title,
+                desc: desc
+            });
+            saveData(appData);
+            renderAll();
+        }
+
+        // ============ 恢复默认 ============
+        function resetData() {
+            if (confirm('确定恢复为默认内容吗？所有修改将丢失！')) {
+                localStorage.removeItem('kebonData');
+                appData = JSON.parse(JSON.stringify(defaultData));
+                renderAll();
+                alert('已恢复默认内容！');
+            }
+        }
+
+        // ============ 初始化 ============
+        renderAll();
+
+        console.log('✅ 深圳市科邦知识产权有限公司网站已就绪');
+        console.log('💡 点击顶部"开启编辑"按钮即可修改所有内容');
+        console.log('📦 数据保存在浏览器本地存储中');
+    </script>
 </body>
 </html>
