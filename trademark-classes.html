@@ -8,31 +8,36 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
         
-        .header { background: #0a2c5c; color: white; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 30px; }
+        .header { background: #0a2c5c; color: white; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 25px; }
         .header h1 { font-size: 1.6rem; }
         .header a { color: #facc15; text-decoration: none; font-size: 0.9rem; }
         
-        .search-box { display: flex; gap: 10px; margin-bottom: 25px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex-wrap: wrap; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 15px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex-wrap: wrap; }
         .search-box input { flex: 1; min-width: 200px; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 30px; font-size: 1rem; outline: none; }
         .search-box input:focus { border-color: #2563eb; }
         .search-box button { padding: 12px 25px; background: #2563eb; color: white; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer; font-weight: 600; }
         .search-box button:hover { background: #1d4ed8; }
         
+        .search-hint { text-align: center; font-size: 0.85rem; color: #64748b; margin-bottom: 15px; }
+        .search-hint i { color: #2563eb; }
+        
         .stats { text-align: center; margin-bottom: 15px; color: #64748b; font-size: 0.9rem; }
         .stats span { color: #2563eb; font-weight: 700; }
         
         .class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-        .class-card { background: white; border-radius: 15px; padding: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); border-left: 4px solid #2563eb; cursor: pointer; transition: 0.2s; }
-        .class-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .class-card { background: white; border-radius: 15px; padding: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); border-left: 4px solid #2563eb; cursor: pointer; transition: 0.2s; text-decoration: none; color: inherit; display: block; }
+        .class-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-left-color: #facc15; }
         .class-card.hidden { display: none; }
         .class-card .class-num { font-size: 1.4rem; font-weight: 800; color: #2563eb; margin-bottom: 5px; }
-        .class-card .class-name { font-weight: 600; color: #0a2c5c; margin-bottom: 8px; }
+        .class-card .class-name { font-weight: 600; color: #0a2c5c; margin-bottom: 8px; font-size: 1.05rem; }
         .class-card .class-examples { color: #64748b; font-size: 0.9rem; line-height: 1.5; }
         .class-card .class-type { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; }
         .type-goods { background: #dbeafe; color: #1e40af; }
         .type-service { background: #fef3c7; color: #92400e; }
+        .class-card .arrow-hint { float: right; color: #94a3b8; font-size: 0.85rem; opacity: 0; transition: 0.2s; }
+        .class-card:hover .arrow-hint { opacity: 1; color: #2563eb; }
         
         .no-result { text-align: center; padding: 50px; color: #94a3b8; display: none; }
         .no-result i { font-size: 3rem; margin-bottom: 15px; }
@@ -46,14 +51,17 @@
 <body>
     <div class="header">
         <h1><i class="fas fa-sitemap"></i> 商标注册用商品和服务分类表</h1>
-        <p style="margin-top:8px;opacity:0.9;">基于尼斯分类第十二版（2025版）</p>
+        <p style="margin-top:8px;opacity:0.9;">基于尼斯分类第十二版（2025版）| 点击类别查看详细小项</p>
         <a href="index.html">← 返回首页</a>
     </div>
 
     <div class="container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="输入关键词搜索类别（如：服装、餐饮、软件...）" oninput="filterClasses()">
+            <input type="text" id="searchInput" placeholder="搜索商品/服务关键词（如：服装、餐饮、软件、化妆品...）" oninput="filterClasses()">
             <button onclick="filterClasses()"><i class="fas fa-search"></i> 搜索</button>
+        </div>
+        <div class="search-hint">
+            <i class="fas fa-info-circle"></i> 支持搜索45个大类及其所有子类商品/服务，如搜索"口红"可找到第3类
         </div>
         
         <div class="stats">共 <span id="totalCount">45</span> 个类别 | 显示 <span id="showCount">45</span> 个</div>
@@ -66,63 +74,65 @@
     </div>
 
     <script>
+        // 完整45类数据（含子类关键词用于搜索）
         const classes = [
-            { num: 1, name: "化学原料", type: "goods", examples: "工业用化学品、化肥、灭火剂、淬火剂、焊接剂、食品防腐剂、鞣料" },
-            { num: 2, name: "颜料油漆", type: "goods", examples: "颜料、清漆、油漆、防锈剂、木材防腐剂、着色剂、油墨" },
-            { num: 3, name: "日化用品", type: "goods", examples: "洗衣粉、洗发水、牙膏、香水、化妆品、护肤品、清洁制剂" },
-            { num: 4, name: "燃料油脂", type: "goods", examples: "工业用油、燃料、润滑油、蜡烛、除尘制剂、电能" },
-            { num: 5, name: "医药用品", type: "goods", examples: "药品、医疗器械、消毒剂、杀虫剂、婴儿食品、营养补充剂" },
-            { num: 6, name: "金属材料", type: "goods", examples: "金属建筑材料、五金器具、金属容器、保险箱、金属标牌" },
-            { num: 7, name: "机械设备", type: "goods", examples: "机器、机床、马达、引擎、食品加工机械、农业机械、打印机" },
-            { num: 8, name: "手工器械", type: "goods", examples: "刀叉餐具、剃须刀、理发工具、园艺工具、电动/非电动手工工具" },
-            { num: 9, name: "科学仪器", type: "goods", examples: "手机、电脑、软件、APP、相机、眼镜、电池、充电器、电子设备" },
-            { num: 10, name: "医疗器械", type: "goods", examples: "医疗仪器、牙科设备、助听器、口罩、避孕套、假肢、矫形用品" },
-            { num: 11, name: "灯饰空调", type: "goods", examples: "灯具、电饭煲、微波炉、冰箱、空调、热水器、消毒设备" },
-            { num: 12, name: "运输工具", type: "goods", examples: "汽车、电动车、自行车、婴儿车、轮胎、无人机、船舶" },
-            { num: 13, name: "军火烟火", type: "goods", examples: "枪支、弹药、炸药、烟花、爆竹、个人防护用喷雾" },
-            { num: 14, name: "珠宝钟表", type: "goods", examples: "珠宝首饰、手表、钟、贵重金属、宝石、奖章" },
-            { num: 15, name: "乐器", type: "goods", examples: "钢琴、吉他、小提琴、鼓、电子乐器、乐器配件" },
-            { num: 16, name: "办公用品", type: "goods", examples: "纸张、印刷品、书籍、文具、画笔、教学材料、塑料袋" },
-            { num: 17, name: "橡胶制品", type: "goods", examples: "橡胶、塑料制品、绝缘材料、胶带、密封材料、软管" },
-            { num: 18, name: "皮革皮具", type: "goods", examples: "箱包、钱包、背包、雨伞、皮带、皮具、动物皮" },
-            { num: 19, name: "建筑材料", type: "goods", examples: "石材、水泥、瓷砖、玻璃、非金属建筑材料、沥青" },
-            { num: 20, name: "家具家居", type: "goods", examples: "家具、床垫、枕头、镜子、展示架、木制工艺品、宠物家具" },
-            { num: 21, name: "厨房洁具", type: "goods", examples: "锅碗瓢盆、水杯、保温杯、梳子、牙刷、清洁工具、玻璃器皿" },
-            { num: 22, name: "绳网袋蓬", type: "goods", examples: "绳索、帐篷、编织袋、渔网、纺织纤维、包装绳" },
-            { num: 23, name: "纺织用纱", type: "goods", examples: "纺织用纱、线、毛线、丝线、棉线" },
-            { num: 24, name: "床上用品", type: "goods", examples: "床单、被套、毛巾、浴巾、纺织品、桌布、窗帘" },
-            { num: 25, name: "服装鞋帽", type: "goods", examples: "衣服、裤子、裙子、鞋子、帽子、袜子、围巾、领带" },
-            { num: 26, name: "花边配饰", type: "goods", examples: "纽扣、拉链、发夹、假发、针线、人造花、刺绣品" },
-            { num: 27, name: "地毯地垫", type: "goods", examples: "地毯、地垫、席子、墙纸、体操垫" },
-            { num: 28, name: "玩具体育", type: "goods", examples: "玩具、游戏机、健身器材、钓鱼用具、圣诞树装饰、棋牌" },
-            { num: 29, name: "肉类食品", type: "goods", examples: "肉、鱼、食用油、牛奶、奶酪、果冻、加工过的坚果、蛋" },
-            { num: 30, name: "面食调味", type: "goods", examples: "面包、糕点、咖啡、茶、糖、蜂蜜、调味品、方便食品、零食" },
-            { num: 31, name: "农林生鲜", type: "goods", examples: "新鲜水果、蔬菜、花卉、树木、宠物食品、饲料、未加工谷物" },
-            { num: 32, name: "啤酒饮料", type: "goods", examples: "啤酒、矿泉水、汽水、果汁、奶茶（非奶为主）、运动饮料" },
-            { num: 33, name: "含酒精酒类", type: "goods", examples: "白酒、红酒、葡萄酒、黄酒、洋酒、鸡尾酒、米酒" },
-            { num: 34, name: "烟草烟具", type: "goods", examples: "香烟、雪茄、电子烟、打火机、火柴、烟灰缸" },
-            { num: 35, name: "广告销售", type: "service", examples: "广告策划、市场营销、替他人推销、电商平台、商业管理、文秘服务" },
-            { num: 36, name: "金融物管", type: "service", examples: "银行、保险、金融贷款、不动产管理、基金、支付服务、担保" },
-            { num: 37, name: "建筑修理", type: "service", examples: "建筑装修、汽车维修、家具修理、电器安装、清洁服务" },
-            { num: 38, name: "通讯服务", type: "service", examples: "电信服务、网络传输、电视广播、视频会议、电子邮件" },
-            { num: 39, name: "运输旅行", type: "service", examples: "物流快递、快递、旅游、租车、停车场、搬家、仓储" },
-            { num: 40, name: "材料加工", type: "service", examples: "布料裁剪、食品加工、印刷、废物处理、金属处理、能源生产" },
-            { num: 41, name: "教育娱乐", type: "service", examples: "教育培训、学校、健身俱乐部、出版、演出、游戏、翻译" },
-            { num: 42, name: "科技服务", type: "service", examples: "软件开发、网站建设、APP开发、设计服务、化学研究、云计算" },
-            { num: 43, name: "餐饮住宿", type: "service", examples: "餐厅、酒店、咖啡馆、外卖、养老院、托儿所、日间照料" },
-            { num: 44, name: "医疗园艺", type: "service", examples: "医院、美容院、理发店、按摩、宠物医院、园艺、配镜" },
-            { num: 45, name: "社会服务", type: "service", examples: "法律服务、知识产权代理、安保、婚介、交友、殡葬、宗教" }
+            { num: 1, name: "化学原料", type: "goods", examples: "工业用化学品、化肥、灭火剂、淬火剂、焊接剂、食品防腐剂、鞣料", keywords: "化学品 化肥 灭火剂 焊接剂 防腐剂 鞣料 工业用盐 工业用酶 蒸馏水 酒精 工业用胶 塑料分散剂" },
+            { num: 2, name: "颜料油漆", type: "goods", examples: "颜料、清漆、油漆、防锈剂、木材防腐剂、着色剂、油墨", keywords: "颜料 清漆 油漆 防锈剂 木材防腐剂 着色剂 油墨 染料 印刷油墨 涂料 食用色素 金粉" },
+            { num: 3, name: "日化用品", type: "goods", examples: "洗衣粉、洗发水、牙膏、香水、化妆品、护肤品、清洁制剂", keywords: "洗衣粉 洗发水 牙膏 香水 化妆品 护肤品 洗面奶 口红 面膜 沐浴露 肥皂 洗洁精 口红 眼影 指甲油" },
+            { num: 4, name: "燃料油脂", type: "goods", examples: "工业用油、燃料、润滑油、蜡烛、除尘制剂、电能", keywords: "工业用油 燃料 润滑油 蜡烛 除尘剂 电能 汽油 柴油 煤 木柴 酒精燃料 润滑脂" },
+            { num: 5, name: "医药用品", type: "goods", examples: "药品、医疗器械、消毒剂、杀虫剂、婴儿食品、营养补充剂", keywords: "药品 医疗器械 消毒剂 杀虫剂 婴儿食品 营养补充剂 维生素 中药 西药 保健品 绷带 口罩" },
+            { num: 6, name: "金属材料", type: "goods", examples: "金属建筑材料、五金器具、金属容器、保险箱、金属标牌", keywords: "金属建材 五金 金属容器 保险箱 金属标牌 铝合金 钢管 铁丝 金属门 金属窗 金属螺丝 金属阀门" },
+            { num: 7, name: "机械设备", type: "goods", examples: "机器、机床、马达、引擎、食品加工机械、农业机械、打印机", keywords: "机器 机床 马达 引擎 食品机械 农业机械 打印机 3D打印机 机器人 洗衣机 电动工具 发电机" },
+            { num: 8, name: "手工器械", type: "goods", examples: "刀叉餐具、剃须刀、理发工具、园艺工具、电动/非电动手工工具", keywords: "刀叉 餐具 剃须刀 理发工具 园艺工具 剪刀 锤子 螺丝刀 指甲刀 电动剃须刀 手动工具" },
+            { num: 9, name: "科学仪器", type: "goods", examples: "手机、电脑、软件、APP、相机、眼镜、电池、充电器、电子设备", keywords: "手机 电脑 软件 APP 相机 眼镜 电池 充电器 平板电脑 耳机 智能手表 数据线 芯片 传感器" },
+            { num: 10, name: "医疗器械", type: "goods", examples: "医疗仪器、牙科设备、助听器、口罩、避孕套、假肢、矫形用品", keywords: "医疗仪器 牙科设备 助听器 口罩 避孕套 假肢 矫形器 血压计 体温计 轮椅 手术器械" },
+            { num: 11, name: "灯饰空调", type: "goods", examples: "灯具、电饭煲、微波炉、冰箱、空调、热水器、消毒设备", keywords: "灯具 电饭煲 微波炉 冰箱 空调 热水器 消毒柜 灯泡 浴霸 取暖器 饮水机 风扇 加湿器" },
+            { num: 12, name: "运输工具", type: "goods", examples: "汽车、电动车、自行车、婴儿车、轮胎、无人机、船舶", keywords: "汽车 电动车 自行车 婴儿车 轮胎 无人机 船舶 摩托车 飞机 火车 轮椅(运输用) 汽车配件" },
+            { num: 13, name: "军火烟火", type: "goods", examples: "枪支、弹药、炸药、烟花、爆竹、个人防护用喷雾", keywords: "枪支 弹药 炸药 烟花 爆竹 喷雾 信号弹 鞭炮 烟火 催泪弹" },
+            { num: 14, name: "珠宝钟表", type: "goods", examples: "珠宝首饰、手表、钟、贵重金属、宝石、奖章", keywords: "珠宝 首饰 手表 钟 贵金属 宝石 奖章 项链 戒指 耳环 手镯 钻石 翡翠 黄金 银饰" },
+            { num: 15, name: "乐器", type: "goods", examples: "钢琴、吉他、小提琴、鼓、电子乐器、乐器配件", keywords: "钢琴 吉他 小提琴 鼓 电子琴 乐器 笛子 二胡 古筝 乐器盒 乐谱架 调音器" },
+            { num: 16, name: "办公用品", type: "goods", examples: "纸张、印刷品、书籍、文具、画笔、教学材料、塑料袋", keywords: "纸张 印刷品 书籍 文具 画笔 教材 塑料袋 笔记本 笔 文件夹 订书机 杂志 画册 日历" },
+            { num: 17, name: "橡胶制品", type: "goods", examples: "橡胶、塑料制品、绝缘材料、胶带、密封材料、软管", keywords: "橡胶 塑料 绝缘材料 胶带 密封材料 软管 防水材料 保温材料 塑胶 生胶" },
+            { num: 18, name: "皮革皮具", type: "goods", examples: "箱包、钱包、背包、雨伞、皮带、皮具、动物皮", keywords: "箱包 钱包 背包 雨伞 皮带 皮具 行李箱 手提包 书包 公文包 皮衣 动物皮" },
+            { num: 19, name: "建筑材料", type: "goods", examples: "石材、水泥、瓷砖、玻璃、非金属建筑材料、沥青", keywords: "石材 水泥 瓷砖 玻璃 建材 沥青 大理石 花岗岩 地板 墙砖 石膏 涂料(建筑)" },
+            { num: 20, name: "家具家居", type: "goods", examples: "家具、床垫、枕头、镜子、展示架、木制工艺品、宠物家具", keywords: "家具 床垫 枕头 镜子 展示架 木工艺品 沙发 桌子 椅子 柜子 床 宠物家具 衣架" },
+            { num: 21, name: "厨房洁具", type: "goods", examples: "锅碗瓢盆、水杯、保温杯、梳子、牙刷、清洁工具、玻璃器皿", keywords: "锅 碗 瓢 盆 水杯 保温杯 梳子 牙刷 清洁工具 玻璃杯 茶具 餐具 保温瓶 保鲜盒" },
+            { num: 22, name: "绳网袋蓬", type: "goods", examples: "绳索、帐篷、编织袋、渔网、纺织纤维、包装绳", keywords: "绳索 帐篷 编织袋 渔网 纺织纤维 包装绳 帆布 吊床 网 麻袋" },
+            { num: 23, name: "纺织用纱", type: "goods", examples: "纺织用纱、线、毛线、丝线、棉线", keywords: "纱 线 毛线 丝线 棉线 纺织纱 尼龙线 缝纫线" },
+            { num: 24, name: "床上用品", type: "goods", examples: "床单、被套、毛巾、浴巾、纺织品、桌布、窗帘", keywords: "床单 被套 毛巾 浴巾 纺织品 桌布 窗帘 被子 枕头套 床罩 毛毯 浴帘" },
+            { num: 25, name: "服装鞋帽", type: "goods", examples: "衣服、裤子、裙子、鞋子、帽子、袜子、围巾、领带", keywords: "衣服 裤子 裙子 鞋子 帽子 袜子 围巾 领带 T恤 衬衫 外套 羽绒服 运动鞋 皮鞋 内衣" },
+            { num: 26, name: "花边配饰", type: "goods", examples: "纽扣、拉链、发夹、假发、针线、人造花、刺绣品", keywords: "纽扣 拉链 发夹 假发 针线 人造花 刺绣 胸针 花边 蕾丝 头发饰品" },
+            { num: 27, name: "地毯地垫", type: "goods", examples: "地毯、地垫、席子、墙纸、体操垫", keywords: "地毯 地垫 席子 墙纸 体操垫 地板革 瑜伽垫 浴垫 门垫" },
+            { num: 28, name: "玩具体育", type: "goods", examples: "玩具、游戏机、健身器材、钓鱼用具、圣诞树装饰、棋牌", keywords: "玩具 游戏机 健身器材 钓鱼用具 圣诞装饰 棋牌 篮球 足球 球拍 拼图 积木 滑板 娃娃" },
+            { num: 29, name: "肉类食品", type: "goods", examples: "肉、鱼、食用油、牛奶、奶酪、果冻、加工过的坚果、蛋", keywords: "肉 鱼 食用油 牛奶 奶酪 果冻 坚果 蛋 火腿 香肠 豆腐 腌制食品 酸奶 奶粉" },
+            { num: 30, name: "面食调味", type: "goods", examples: "面包、糕点、咖啡、茶、糖、蜂蜜、调味品、方便食品、零食", keywords: "面包 糕点 咖啡 茶 糖 蜂蜜 调味品 方便面 零食 巧克力 冰淇淋 饺子 面条 米 酱油 醋" },
+            { num: 31, name: "农林生鲜", type: "goods", examples: "新鲜水果、蔬菜、花卉、树木、宠物食品、饲料、未加工谷物", keywords: "水果 蔬菜 花卉 树木 宠物食品 饲料 谷物 小麦 稻谷 鲜花 树苗 活鱼 新鲜水果" },
+            { num: 32, name: "啤酒饮料", type: "goods", examples: "啤酒、矿泉水、汽水、果汁、奶茶（非奶为主）、运动饮料", keywords: "啤酒 矿泉水 汽水 果汁 奶茶 运动饮料 可乐 雪碧 纯净水 豆奶 能量饮料" },
+            { num: 33, name: "含酒精酒类", type: "goods", examples: "白酒、红酒、葡萄酒、黄酒、洋酒、鸡尾酒、米酒", keywords: "白酒 红酒 葡萄酒 黄酒 洋酒 鸡尾酒 米酒 威士忌 白兰地 伏特加 清酒" },
+            { num: 34, name: "烟草烟具", type: "goods", examples: "香烟、雪茄、电子烟、打火机、火柴、烟灰缸", keywords: "香烟 雪茄 电子烟 打火机 火柴 烟灰缸 烟斗 卷烟纸 烟草" },
+            { num: 35, name: "广告销售", type: "service", examples: "广告策划、市场营销、替他人推销、电商平台、商业管理、文秘服务", keywords: "广告 营销 推销 电商 商业管理 文秘 会计 办公事务 招聘 特许经营 进出口代理" },
+            { num: 36, name: "金融物管", type: "service", examples: "银行、保险、金融贷款、不动产管理、基金、支付服务、担保", keywords: "银行 保险 贷款 不动产 基金 支付 担保 理财 证券 典当 信托 信用卡 支付宝 微信支付" },
+            { num: 37, name: "建筑修理", type: "service", examples: "建筑装修、汽车维修、家具修理、电器安装、清洁服务", keywords: "建筑 装修 汽车维修 家具修理 电器安装 清洁 电梯安装 防水施工 房屋建造 室内装潢" },
+            { num: 38, name: "通讯服务", type: "service", examples: "电信服务、网络传输、电视广播、视频会议、电子邮件", keywords: "电信 网络 电视广播 视频会议 电子邮件 5G 宽带 直播 短信 电话 卫星传输" },
+            { num: 39, name: "运输旅行", type: "service", examples: "物流快递、快递、旅游、租车、停车场、搬家、仓储", keywords: "物流 快递 旅游 租车 停车场 搬家 仓储 货运 客运 机票预订 酒店预订 外卖配送" },
+            { num: 40, name: "材料加工", type: "service", examples: "布料裁剪、食品加工、印刷、废物处理、金属处理、能源生产", keywords: "布料加工 食品加工 印刷 废物处理 金属处理 能源生产 水处理 空气净化 染色 打磨 焊接" },
+            { num: 41, name: "教育娱乐", type: "service", examples: "教育培训、学校、健身俱乐部、出版、演出、游戏、翻译", keywords: "教育 培训 学校 健身 出版 演出 游戏 翻译 图书馆 博物馆 在线课程 辅导班 幼儿园" },
+            { num: 42, name: "科技服务", type: "service", examples: "软件开发、网站建设、APP开发、设计服务、化学研究、云计算", keywords: "软件开发 网站建设 APP开发 设计 化学研究 云计算 人工智能 大数据 服务器 域名注册 质量检测" },
+            { num: 43, name: "餐饮住宿", type: "service", examples: "餐厅、酒店、咖啡馆、外卖、养老院、托儿所、日间照料", keywords: "餐厅 酒店 咖啡馆 外卖 养老院 托儿所 快餐店 茶馆 酒吧 青年旅社 民宿 食堂" },
+            { num: 44, name: "医疗园艺", type: "service", examples: "医院、美容院、理发店、按摩、宠物医院、园艺、配镜", keywords: "医院 美容院 理发店 按摩 宠物医院 园艺 配镜 牙科 整形 中医 足疗 美甲 种花" },
+            { num: 45, name: "社会服务", type: "service", examples: "法律服务、知识产权代理、安保、婚介、交友、殡葬、宗教", keywords: "法律 知识产权 安保 婚介 交友 殡葬 宗教 律师 侦探 消防 开锁 礼仪 心理咨询" }
         ];
 
         function renderClasses(data) {
             const grid = document.getElementById('classGrid');
             grid.innerHTML = data.map(c => `
-                <div class="class-card" data-keywords="${c.name} ${c.examples}">
+                <a href="trademark-class-detail.html?class=${c.num}" class="class-card" data-keywords="${c.name} ${c.examples} ${c.keywords}">
                     <span class="class-type ${c.type === 'goods' ? 'type-goods' : 'type-service'}">${c.type === 'goods' ? '商品' : '服务'}</span>
+                    <span class="arrow-hint">查看详情 →</span>
                     <div class="class-num">第${c.num}类</div>
                     <div class="class-name">${c.name}</div>
                     <div class="class-examples">${c.examples}</div>
-                </div>
+                </a>
             `).join('');
         }
 
