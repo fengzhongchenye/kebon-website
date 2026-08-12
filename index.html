@@ -7,18 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: #f8fafc; color: #1e293b; }
+        body { font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: #f8fafc; color: #1e293b; scroll-behavior: smooth; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
         .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 10px; }
         .logo { display: flex; align-items: center; gap: 10px; }
         .logo-icon { font-size: 2rem; color: #0a2c5c; }
         .logo-text { font-weight: 700; font-size: 1.4rem; color: #0b2b5e; }
         .logo-text span { color: #2563eb; }
-        .nav-links { display: flex; gap: 25px; list-style: none; align-items: center; flex-wrap: wrap; }
-        .nav-links a { text-decoration: none; color: #334155; font-weight: 500; }
-        .btn-contact-nav { background: #0a2c5c; color: white !important; padding: 10px 22px; border-radius: 30px; }
+        .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: #334155; font-weight: 500; font-size: 0.95rem; }
+        .nav-links a:hover { color: #2563eb; }
+        .btn-contact-nav { background: #0a2c5c; color: white !important; padding: 10px 20px; border-radius: 30px; }
+        .btn-contact-nav:hover { background: #123f7a !important; color: white !important; }
         
         .hero { background: linear-gradient(105deg, #f0f4ff 0%, #ffffff 70%); padding: 60px 0; }
         .hero-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
@@ -30,17 +32,19 @@
         .hero-image { flex: 1 1 400px; background: linear-gradient(145deg, #d9e6ff, #ffffff); border-radius: 32px; padding: 30px; text-align: center; }
         .hero-image i { font-size: 8rem; color: #0a2c5c; }
         
-        .section-title { text-align: center; margin: 70px 0 40px; }
+        .section-title { text-align: center; margin: 60px 0 35px; }
         .section-title h2 { font-size: 2.2rem; color: #0b2b5e; }
         .section-title p { color: #64748b; margin-top: 10px; }
         .underline { width: 80px; height: 4px; background: #2563eb; margin: 12px auto 0; border-radius: 4px; }
         
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 28px; margin-top: 20px; }
-        .service-card { background: white; border-radius: 24px; padding: 28px 22px; box-shadow: 0 12px 30px rgba(0,0,0,0.04); border: 2px solid transparent; transition: 0.2s; }
-        .service-card:hover { border-color: #2563eb; transform: translateY(-5px); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; margin-top: 20px; }
+        .service-card { background: white; border-radius: 24px; padding: 28px 22px; box-shadow: 0 12px 30px rgba(0,0,0,0.04); border: 2px solid transparent; transition: 0.2s; cursor: pointer; }
+        .service-card:hover { border-color: #2563eb; transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .card-icon { font-size: 2.4rem; color: #2563eb; background: #eff6ff; width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; border-radius: 18px; margin-bottom: 20px; }
         .service-card h3 { margin-bottom: 10px; color: #0f2b4b; }
         .service-card p { color: #64748b; }
+        .card-click-hint { font-size: 0.8rem; color: #2563eb; margin-top: 12px; opacity: 0; transition: 0.2s; }
+        .service-card:hover .card-click-hint { opacity: 1; }
         
         .grants-section { background: #f0f4fe; border-radius: 40px; padding: 50px 30px; margin: 50px 0; }
         .grant-list { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
@@ -54,26 +58,34 @@
         .about-section { background: white; border-radius: 24px; padding: 35px; margin: 40px 0; }
         .about-section h2 { color: #0a2c5c; margin-bottom: 15px; }
         
+        /* 弹窗 */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 20px; padding: 35px; width: 90%; max-width: 750px; max-height: 85vh; overflow-y: auto; position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #64748b; }
-        .modal-content h2 { color: #0a2c5c; margin-bottom: 20px; padding-right: 30px; }
-        .detail-section { margin-bottom: 20px; }
-        .detail-section h4 { color: #2563eb; margin-bottom: 8px; font-size: 1.1rem; }
-        .detail-content { color: #475569; line-height: 1.7; background: #f8fafc; padding: 15px; border-radius: 10px; min-height: 50px; white-space: pre-wrap; }
+        .modal-content { background: white; border-radius: 20px; padding: 35px; width: 90%; max-width: 800px; max-height: 85vh; overflow-y: auto; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #64748b; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .modal-close:hover { background: #f1f5f9; }
+        .modal-content h2 { color: #0a2c5c; margin-bottom: 20px; padding-right: 40px; font-size: 1.5rem; }
+        .detail-section { margin-bottom: 22px; }
+        .detail-section h4 { color: #2563eb; margin-bottom: 8px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .detail-content { color: #475569; line-height: 1.8; background: #f8fafc; padding: 15px 18px; border-radius: 10px; white-space: pre-wrap; }
+        .detail-content ul, .detail-content ol { padding-left: 20px; }
+        .detail-content li { margin-bottom: 5px; }
+        
+        /* 子页面按钮 */
+        .sub-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .sub-link-btn { display: inline-block; background: #eff6ff; color: #2563eb; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; text-decoration: none; font-weight: 500; transition: 0.2s; }
+        .sub-link-btn:hover { background: #2563eb; color: white; }
+        .sub-link-btn i { margin-right: 5px; }
         
         footer { background: #0b1e33; color: #cbd5e1; padding: 45px 0 25px; margin-top: 60px; }
         .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 25px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
-        .admin-link { text-align: center; margin: 30px 0; }
-        .admin-link a { color: #94a3b8; font-size: 0.85rem; text-decoration: none; }
-        .admin-link a:hover { color: #2563eb; }
-        
         @media (max-width: 700px) {
             .hero-content h1 { font-size: 2rem; }
-            .nav-links { gap: 12px; }
+            .nav-links { gap: 10px; }
+            .nav-links a { font-size: 0.8rem; }
             .modal-content { width: 95%; padding: 20px; }
+            .modal-content h2 { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -87,9 +99,9 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home">首页</a></li>
-                <li><a href="#services">服务</a></li>
+                <li><a href="#services">知识产权服务</a></li>
                 <li><a href="#grants">政府补助</a></li>
-                <li><a href="#about" class="btn-contact-nav">联系咨询</a></li>
+                <li><a href="#about" class="btn-contact-nav">联系我们</a></li>
             </ul>
         </div>
     </nav>
@@ -133,14 +145,20 @@
         </div>
     </div>
 
-    <div class="admin-link">
-        <a href="data.json" target="_blank">📝 查看/编辑数据文件</a>
+    <!-- 服务详情弹窗 -->
+    <div class="modal-overlay" id="serviceModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeServiceModal()">✕</button>
+            <h2 id="serviceModalTitle"></h2>
+            <div id="serviceModalContent"></div>
+        </div>
     </div>
 
-    <div class="modal-overlay" id="detailModal">
+    <!-- 补助详情弹窗 -->
+    <div class="modal-overlay" id="grantModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            <h2 id="modalTitle">项目详情</h2>
+            <button class="modal-close" onclick="closeGrantModal()">✕</button>
+            <h2 id="grantModalTitle">项目详情</h2>
             <div class="detail-section">
                 <h4>📋 申请条件</h4>
                 <div class="detail-content" id="modalConditions"></div>
@@ -177,11 +195,9 @@
     </footer>
 
     <script>
-        // 从 data.json 加载数据
         fetch('data.json')
-            .then(response => response.json())
+            .then(r => r.json())
             .then(data => {
-                // 填充所有内容
                 document.getElementById('companyName').innerHTML = data.companyName;
                 document.getElementById('heroTitle').textContent = data.heroTitle;
                 document.getElementById('heroDesc').textContent = data.heroDesc;
@@ -198,58 +214,102 @@
                 document.getElementById('footerEmail').innerHTML = data.footerEmail;
                 document.getElementById('footerPhone').innerHTML = data.footerPhone;
 
-                // 徽章
                 document.getElementById('heroBadges').innerHTML = 
                     `<span class="badge">${data.badge1}</span>
                      <span class="badge">${data.badge2}</span>
                      <span class="badge">${data.badge3}</span>`;
 
                 // 服务卡片
-                document.getElementById('servicesContainer').innerHTML = data.services.map(s => `
-                    <div class="service-card">
+                document.getElementById('servicesContainer').innerHTML = data.services.map((s, i) => `
+                    <div class="service-card" onclick="openServiceDetail('${s.id}')">
                         <div class="card-icon"><i class="fas ${s.icon}"></i></div>
                         <h3>${s.title}</h3><p>${s.desc}</p>
+                        <div class="card-click-hint">📖 点击查看详情 →</div>
                     </div>
                 `).join('');
 
                 // 补助项目
                 document.getElementById('grantsContainer').innerHTML = data.grants.map((g, i) => `
-                    <div class="grant-item" onclick="openDetail(${i})">
+                    <div class="grant-item" onclick="openGrantDetail(${i})">
                         <i class="fas ${g.icon}"></i><h3>${g.title}</h3><p>${g.desc}</p>
                         <div class="grant-click-hint">📖 点击查看详情 →</div>
                     </div>
                 `).join('');
 
-                // 保存数据供弹窗使用
-                window.grantsData = data.grants;
+                window.appData = data;
             })
-            .catch(error => {
-                console.error('加载数据失败:', error);
-                document.body.innerHTML = '<div style="text-align:center;padding:100px;"><h2>⚠️ 数据加载失败</h2><p>请确保 data.json 文件已上传</p></div>';
-            });
+            .catch(e => console.error('加载失败:', e));
 
-        // 弹窗功能
-        function openDetail(index) {
-            const g = window.grantsData[index];
-            document.getElementById('modalTitle').textContent = '📋 ' + g.title;
-            document.getElementById('modalConditions').textContent = g.conditions || '暂无内容';
-            document.getElementById('modalPolicy').textContent = g.policy || '暂无内容';
-            document.getElementById('modalMaterials').textContent = g.materials || '暂无内容';
-            document.getElementById('modalNotes').textContent = g.notes || '暂无内容';
-            document.getElementById('detailModal').classList.add('active');
+        function openServiceDetail(id) {
+            const s = window.appData.services.find(s => s.id === id);
+            if (!s) return;
+            document.getElementById('serviceModalTitle').textContent = s.title;
+            
+            let html = '';
+            
+            // 定义
+            if (s.definition) {
+                html += `<div class="detail-section"><h4>📖 ${s.title}定义</h4><div class="detail-content">${s.definition}</div></div>`;
+            }
+            
+            // 分类介绍
+            if (s.categories) {
+                html += `<div class="detail-section"><h4>📂 分类介绍</h4><div class="detail-content">${s.categories}</div></div>`;
+            }
+            
+            // 业务介绍
+            if (s.business) {
+                html += `<div class="detail-section"><h4>💼 业务范围</h4><div class="detail-content">${s.business}</div></div>`;
+            }
+            
+            // 子链接
+            if (s.subLinks && s.subLinks.length > 0) {
+                html += `<div class="detail-section"><h4>🔗 相关工具</h4><div class="sub-links">`;
+                s.subLinks.forEach(link => {
+                    html += `<a href="${link.url}" class="sub-link-btn" ${link.target ? 'target="_blank"' : ''}><i class="fas ${link.icon}"></i> ${link.label}</a>`;
+                });
+                html += `</div></div>`;
+            }
+            
+            document.getElementById('serviceModalContent').innerHTML = html;
+            document.getElementById('serviceModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() {
-            document.getElementById('detailModal').classList.remove('active');
+        function closeServiceModal() {
+            document.getElementById('serviceModal').classList.remove('active');
             document.body.style.overflow = '';
         }
 
-        document.getElementById('detailModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
+        function openGrantDetail(index) {
+            const g = window.appData.grants[index];
+            document.getElementById('grantModalTitle').textContent = '📋 ' + g.title;
+            document.getElementById('modalConditions').textContent = g.conditions || '暂无';
+            document.getElementById('modalPolicy').textContent = g.policy || '暂无';
+            document.getElementById('modalMaterials').textContent = g.materials || '暂无';
+            document.getElementById('modalNotes').textContent = g.notes || '暂无';
+            document.getElementById('grantModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGrantModal() {
+            document.getElementById('grantModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 关闭弹窗事件
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) { this.classList.remove('active'); document.body.style.overflow = ''; }
+            });
         });
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => {
+                    m.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
         });
     </script>
 </body>
