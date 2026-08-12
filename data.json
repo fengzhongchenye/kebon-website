@@ -11,17 +11,53 @@
   "grantsSubtitle": "精准匹配政策，获取百万级资金支持",
   "aboutTitle": "<i class='fas fa-building'></i> 深圳市科邦知识产权有限公司",
   "aboutDesc": "成立于深圳，团队由专利代理师、商标代理人、项目申报专家组成。累计服务超过1200家科技企业，成功申报政府补助金额超4.6亿元。",
-  "aboutAddress": "<i class='fas fa-map-marker-alt' style='color:#2563eb;'></i> <strong>深圳地址：</strong>深圳市龙岗区龙岗街道平南社区龙平东路145号富德中心五楼E18 · 联系电话：13590412002",
+  "aboutAddress": "<i class='fas fa-map-marker-alt' style='color:#2563eb;'></i> <strong>深圳地址：</strong>深圳市龙岗区龙岗街道平南社区龙平东路145号富德中心五楼E18 · 联系电话：0755-8866 8828",
   "footerName": "科邦知识产权",
   "footerSlogan": "专业 · 高效 · 诚信",
   "footerDesc": "政府补助申报 | 知识产权代理",
-  "footerEmail": "<i class='fas fa-envelope'></i> 875415742@qq.com",
-  "footerPhone": "<i class='fas fa-phone'></i>13590412002",
+  "footerEmail": "<i class='fas fa-envelope'></i> info@kebonip.com",
+  "footerPhone": "<i class='fas fa-phone'></i> 0755-8866 8828",
   "services": [
-    { "icon": "fa-trademark", "title": "商标注册", "desc": "国内商标、马德里国际商标，风险评估与驳回复审，提高授权率。" },
-    { "icon": "fa-lightbulb", "title": "专利申请", "desc": "发明专利、实用新型、外观设计，技术挖掘与专利布局。" },
-    { "icon": "fa-copyright", "title": "版权登记", "desc": "软件著作权、作品登记，快速确权与维权支持。" },
-    { "icon": "fa-gavel", "title": "知识产权诉讼", "desc": "侵权调查、行政查处、司法诉讼，捍卫合法权益。" }
+    {
+      "id": "trademark",
+      "icon": "fa-trademark",
+      "title": "商标注册",
+      "desc": "国内商标、马德里国际商标，风险评估与驳回复审，提高授权率。",
+      "definition": "<strong>商标</strong>是商品的生产者、经营者在其生产、制造、加工、拣选或者经销的商品上或者服务的提供者在其提供的服务上采用的，用于区别商品或服务来源的，由文字、图形、字母、数字、三维标志、颜色组合和声音等，以及上述要素的组合，具有显著特征的标志。商标是企业的无形资产，是品牌价值的核心载体。经国家知识产权局商标局核准注册的商标为注册商标，受法律保护。",
+      "categories": "<strong>商标分类：</strong><br><br>根据《尼斯分类》，商标分为<strong>45个大类</strong>：<br>• <strong>第1-34类：商品商标</strong>（如化工原料、机械设备、食品、服装等）<br>• <strong>第35-45类：服务商标</strong>（如广告销售、金融服务、教育培训、法律服务等）<br><br><strong>商标类型：</strong><br>• 文字商标、图形商标、组合商标<br>• 三维标志商标（立体商标）<br>• 颜色组合商标<br>• 声音商标",
+      "business": "<strong>商标业务范围：</strong><br><br>1. <strong>商标注册</strong> — 国内商标申请、马德里国际商标注册、欧盟商标注册、单一国家商标注册<br><br>2. <strong>商标变更</strong> — 商标注册人名义变更、地址变更、代理人变更等<br><br>3. <strong>商标续展</strong> — 注册商标有效期为10年，期满前12个月内办理续展，每次续展有效期为10年<br><br>4. <strong>商标转让</strong> — 商标专用权转让（买卖），包括合同转让和继承转让<br><br>5. <strong>商标驳回复审</strong> — 商标被驳回后，向商标评审委员会申请复审，争取商标获准注册<br><br>6. <strong>商标异议/无效宣告</strong> — 对他人恶意抢注的商标提出异议，或宣告无效<br><br>7. <strong>商标许可备案</strong> — 商标授权他人使用，需向商标局备案<br><br>8. <strong>商标监测与维权</strong> — 监控商标公告，防止抢注，处理侵权纠纷",
+      "subLinks": [
+        { "label": "商标类别表查询", "url": "trademark-classes.html", "icon": "fa-search", "target": "" },
+        { "label": "最新商标法", "url": "trademark-law.html", "icon": "fa-file-alt", "target": "" }
+      ]
+    },
+    {
+      "id": "patent",
+      "icon": "fa-lightbulb",
+      "title": "专利申请",
+      "desc": "发明专利、实用新型、外观设计，技术挖掘与专利布局。",
+      "definition": "<strong>专利</strong>是知识产权的一种，指国家授予发明创造者在一定期限内对其发明创造享有的独占权或专有权。专利权具有<strong>独占性、地域性和时间性</strong>三大特征。他人未经专利权人许可，不得实施其专利。",
+      "categories": "<strong>专利分为三种类型：</strong><br><br>1. <strong>发明专利</strong> — 对产品、方法或者其改进所提出的新的技术方案。保护期20年。审查严格，需经过实质审查。<br><br>2. <strong>实用新型专利</strong> — 对产品的形状、构造或者其结合所提出的适于实用的新的技术方案。保护期10年。审查相对简单，俗称\"小发明\"。<br><br>3. <strong>外观设计专利</strong> — 对产品的整体或者局部的形状、图案或者其结合以及色彩与形状、图案的结合所作出的富有美感并适于工业应用的新设计。保护期15年。<br><br><strong>专利特点对比：</strong><br>• 发明专利：保护技术方案，含金量最高，审查周期长<br>• 实用新型：保护产品结构，授权快，适合改进型创新<br>• 外观设计：保护产品外观，申请简单，维权便利",
+      "business": "<strong>专利业务范围：</strong><br><br>1. <strong>专利检索与分析</strong> — 查新检索、侵权风险评估、技术情报分析<br><br>2. <strong>专利申请</strong> — 国内专利申请、PCT国际申请、巴黎公约途径<br><br>3. <strong>专利布局</strong> — 核心技术专利群构建、海外专利布局策划<br><br>4. <strong>专利复审与无效</strong> — 驳回后复审、宣告他人专利无效<br><br>5. <strong>专利年费管理</strong> — 年费代缴、年费监控提醒<br><br>6. <strong>专利转让与许可</strong> — 专利权转让合同、专利实施许可<br><br>7. <strong>专利维权</strong> — 侵权调查取证、行政投诉、司法诉讼"
+    },
+    {
+      "id": "copyright",
+      "icon": "fa-copyright",
+      "title": "版权登记",
+      "desc": "软件著作权、作品登记，快速确权与维权支持。",
+      "definition": "<strong>版权（著作权）</strong>是指文学、艺术、科学作品的作者对其作品享有的权利。版权自作品创作完成之日起自动产生，无需登记。但版权登记可以作为权利归属的初步证明，在维权时具有重要作用。",
+      "categories": "<strong>版权保护的作品类型：</strong><br><br>1. <strong>文字作品</strong> — 小说、论文、剧本、商业文案等<br>2. <strong>口述作品</strong> — 演讲、授课、法庭辩论等<br>3. <strong>音乐作品</strong> — 歌曲、交响乐等<br>4. <strong>戏剧作品</strong> — 话剧、歌剧、戏曲等<br>5. <strong>美术作品</strong> — 绘画、书法、雕塑等<br>6. <strong>摄影作品</strong> — 摄影图片<br>7. <strong>电影作品</strong> — 电影、短视频、动画等<br>8. <strong>软件著作权</strong> — 计算机程序及文档<br>9. <strong>设计图纸</strong> — 工程设计图、产品设计图等<br><br><strong>著作权权利：</strong><br>人身权：发表权、署名权、修改权、保护作品完整权（永久保护）<br>财产权：复制权、发行权、出租权、展览权、表演权、信息网络传播权等（保护期：作者终生+死后50年）",
+      "business": "<strong>版权业务范围：</strong><br><br>1. <strong>作品著作权登记</strong> — 美术作品、文字作品、音乐作品等各类作品登记<br><br>2. <strong>软件著作权登记</strong> — 计算机软件著作权登记，高新企业认定必备<br><br>3. <strong>版权变更与转让</strong> — 著作权人变更、权利转让登记<br><br>4. <strong>版权维权</strong> — 侵权取证、发函警告、行政投诉、司法诉讼<br><br>5. <strong>版权运营</strong> — 版权授权许可、版权价值评估"
+    },
+    {
+      "id": "lawsuit",
+      "icon": "fa-gavel",
+      "title": "知识产权诉讼",
+      "desc": "侵权调查、行政查处、司法诉讼，捍卫合法权益。",
+      "definition": "<strong>知识产权诉讼</strong>是指因知识产权侵权、权属争议、合同纠纷等引发的法律诉讼。包括商标侵权诉讼、专利侵权诉讼、著作权侵权诉讼、不正当竞争诉讼等。科邦拥有专业的律师团队，为企业提供全方位的知识产权维权服务。",
+      "categories": "",
+      "business": "<strong>诉讼业务范围：</strong><br><br>1. <strong>侵权调查取证</strong> — 公证购买、证据保全、侵权鉴定<br><br>2. <strong>行政投诉查处</strong> — 向市场监督管理局、知识产权局投诉<br><br>3. <strong>司法诉讼</strong> — 一审、二审、再审，最高法巡回法庭<br><br>4. <strong>电商平台投诉</strong> — 淘宝、京东、拼多多等平台侵权投诉下架<br><br>5. <strong>展会维权</strong> — 展会现场投诉、证据保全<br><br>6. <strong>不正当竞争</strong> — 虚假宣传、商业诋毁、侵犯商业秘密"
+    }
   ],
   "grants": [
     {
