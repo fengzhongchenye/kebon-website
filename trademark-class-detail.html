@@ -6,42 +6,35 @@
     <title>商标分类详情 - 科邦知识产权</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .header { background: #0a2c5c; color: white; padding: 20px; border-radius: 0 0 20px 20px; margin-bottom: 25px; position: sticky; top: 0; z-index: 100; }
-        .header a { color: #facc15; text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 8px; }
-        .header h1 { font-size: 1.4rem; }
-        .header .badge { display: inline-block; background: #facc15; color: #0a2c5c; padding: 4px 14px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; margin-top: 8px; }
-        .search-box { display: flex; gap: 10px; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); }
-        .search-box input { flex: 1; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 30px; font-size: 1rem; outline: none; }
-        .search-box input:focus { border-color: #2563eb; }
-        .search-box button { padding: 12px 25px; background: #2563eb; color: white; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer; font-weight: 600; }
-        .search-hint { font-size: 0.8rem; color: #64748b; text-align: center; margin-bottom: 15px; }
-        .stats { color: #64748b; font-size: 0.9rem; margin-bottom: 10px; text-align: center; }
-        .stats span { color: #2563eb; font-weight: 700; }
-        .subclass-section { background: white; border-radius: 15px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .subclass-header { background: #f0f4ff; padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #2563eb; transition: 0.2s; }
-        .subclass-header:hover { background: #dbeafe; }
-        .subclass-header h3 { color: #0a2c5c; font-size: 1rem; display: flex; align-items: center; gap: 8px; flex: 1; }
-        .subclass-header .toggle-icon { color: #2563eb; transition: 0.3s; }
-        .subclass-header.open .toggle-icon { transform: rotate(180deg); }
-        .subclass-items { display: none; padding: 15px 20px; border-top: 1px solid #e2e8f0; }
-        .subclass-items.show { display: block; }
-        .item-tag { display: inline-block; background: #f8fafc; padding: 6px 12px; border-radius: 8px; margin: 3px; font-size: 0.85rem; border: 1px solid #e2e8f0; transition: 0.2s; }
-        .item-tag:hover { background: #dbeafe; border-color: #2563eb; }
-        .item-tag .code { color: #94a3b8; font-size: 0.7rem; margin-right: 4px; }
-        .item-tag.hidden { display: none; }
-        .no-result { text-align: center; padding: 50px; color: #94a3b8; display: none; }
-        .note-box { background: #fef3c7; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 0.9rem; color: #92400e; }
-        .loading { text-align: center; padding: 30px; color: #64748b; }
-        .loading i { font-size: 2rem; color: #2563eb; animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.1rem; }
-            .subclass-header h3 { font-size: 0.9rem; }
-            .item-tag { font-size: 0.78rem; padding: 5px 8px; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#1e293b}
+        .container{max-width:1000px;margin:0 auto;padding:20px}
+        .header{background:#0a2c5c;color:white;padding:20px;border-radius:0 0 20px 20px;margin-bottom:25px;position:sticky;top:0;z-index:100}
+        .header a{color:#facc15;text-decoration:none;font-size:.9rem;display:inline-block;margin-bottom:8px}
+        .header h1{font-size:1.4rem}
+        .header .badge{display:inline-block;background:#facc15;color:#0a2c5c;padding:4px 14px;border-radius:20px;font-weight:700;font-size:.9rem;margin-top:8px}
+        .search-box{display:flex;gap:10px;margin-bottom:20px;background:white;padding:15px;border-radius:15px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+        .search-box input{flex:1;padding:12px 16px;border:2px solid #e2e8f0;border-radius:30px;font-size:1rem;outline:none}
+        .search-box input:focus{border-color:#2563eb}
+        .search-box button{padding:12px 25px;background:#2563eb;color:white;border:none;border-radius:30px;font-size:1rem;cursor:pointer;font-weight:600}
+        .search-hint{font-size:.8rem;color:#64748b;text-align:center;margin-bottom:15px}
+        .stats{color:#64748b;font-size:.9rem;margin-bottom:10px;text-align:center}
+        .stats span{color:#2563eb;font-weight:700}
+        .subclass-section{background:white;border-radius:15px;margin-bottom:15px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .subclass-header{background:#f0f4ff;padding:15px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #2563eb;transition:.2s}
+        .subclass-header:hover{background:#dbeafe}
+        .subclass-header h3{color:#0a2c5c;font-size:1rem;display:flex;align-items:center;gap:8px;flex:1}
+        .subclass-header .toggle-icon{color:#2563eb;transition:.3s}
+        .subclass-header.open .toggle-icon{transform:rotate(180deg)}
+        .subclass-items{display:none;padding:15px 20px;border-top:1px solid #e2e8f0}
+        .subclass-items.show{display:block}
+        .item-tag{display:inline-block;background:#f8fafc;padding:6px 12px;border-radius:8px;margin:3px;font-size:.85rem;border:1px solid #e2e8f0;transition:.2s}
+        .item-tag:hover{background:#dbeafe;border-color:#2563eb}
+        .item-tag .code{color:#94a3b8;font-size:.7rem;margin-right:4px}
+        .item-tag.hidden{display:none}
+        .no-result{text-align:center;padding:50px;color:#94a3b8;display:none}
+        .note-box{background:#fef3c7;border-radius:10px;padding:15px;margin-top:20px;font-size:.9rem;color:#92400e}
+        @media(max-width:600px){.header h1{font-size:1.1rem}.subclass-header h3{font-size:.9rem}.item-tag{font-size:.78rem;padding:5px 8px}}
     </style>
 </head>
 <body>
@@ -52,72 +45,193 @@
     </div>
     <div class="container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="搜索具体商品/服务名称或编号..." oninput="searchItems()">
+            <input type="text" id="searchInput" placeholder="搜索商品/服务名称或编号..." oninput="searchItems()">
             <button onclick="searchItems()"><i class="fas fa-search"></i> 搜索</button>
         </div>
-        <div class="search-hint">💡 支持搜索商品名称、编号，如"手机"、"090001"、"口红"、"服装"</div>
+        <div class="search-hint">💡 支持搜索商品名称、编号，如"手机"、"090001"、"口红"</div>
         <div class="stats">共 <span id="totalSub">0</span> 个子类 | <span id="totalItems">0</span> 个商品/服务 | 显示 <span id="showItems">0</span> 个</div>
-        <div id="contentArea"><div class="loading"><i class="fas fa-spinner"></i><p>加载中...</p></div></div>
+        <div id="contentArea"></div>
         <div class="no-result" id="noResult"><i class="fas fa-search"></i><p>未找到匹配的项目</p></div>
         <div class="note-box"><strong>📌 说明：</strong>本表基于尼斯分类。如需专业商标注册服务，请联系<strong>科邦知识产权</strong>：0755-8866 8828</div>
     </div>
-    <script src="tm-data.js"></script>
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const classNum = parseInt(urlParams.get('class')) || 1;
-        const className = window.cnMap[classNum] || "未知类别";
-        const classType = classNum <= 34 ? 'goods' : 'service';
-        document.getElementById('pageTitle').textContent = `第${classNum}类 - ${className}`;
-        document.getElementById('classType').textContent = classType === 'goods' ? '商品类（第1-34类）' : '服务类（第35-45类）';
-        let subClasses = window.classData[classNum] || [];
-        if(subClasses.length === 0) subClasses = [{name: className + " 详细数据", items: [["", "数据整理中，请参考官方分类表"]]}];
-        let totalSub = subClasses.length;
-        let totalItems = 0;
-        subClasses.forEach(s => totalItems += s.items.length);
-        document.getElementById('totalSub').textContent = totalSub;
-        document.getElementById('totalItems').textContent = totalItems;
-        document.getElementById('showItems').textContent = totalItems;
-        function renderAll(data) {
-            const area = document.getElementById('contentArea');
-            area.innerHTML = data.map((sub, idx) => `
-                <div class="subclass-section">
-                    <div class="subclass-header" onclick="toggleSubclass(this)">
-                        <h3><i class="fas fa-folder"></i> ${sub.name} <span style="color:#94a3b8;font-size:0.8rem;">(${sub.items.length}项)</span></h3>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="subclass-items" id="subItems${idx}">
-                        ${sub.items.map(item => `<span class="item-tag" data-keywords="${item[1]} ${item[0]}"><span class="code">${item[0]}</span>${item[1]}</span>`).join('')}
-                    </div>
-                </div>`).join('');
+
+<script>
+// ========== 类别名称 ==========
+var cnMap={1:"化学原料",2:"颜料油漆",3:"日化用品",4:"燃料油脂",5:"医药用品",6:"金属材料",7:"机械设备",8:"手工器械",9:"科学仪器",10:"医疗器械",11:"灯饰空调",12:"运输工具",13:"军火烟火",14:"珠宝钟表",15:"乐器",16:"办公用品",17:"橡胶制品",18:"皮革皮具",19:"建筑材料",20:"家具家居",21:"厨房洁具",22:"绳网袋蓬",23:"纺织用纱",24:"床上用品",25:"服装鞋帽",26:"花边配饰",27:"地毯地垫",28:"玩具体育",29:"肉类食品",30:"面食调味",31:"农林生鲜",32:"啤酒饮料",33:"含酒精酒类",34:"烟草烟具",35:"广告销售",36:"金融物管",37:"建筑修理",38:"通讯服务",39:"运输旅行",40:"材料加工",41:"教育娱乐",42:"科技服务",43:"餐饮住宿",44:"医疗园艺",45:"社会服务"};
+
+// ========== 全部45类数据 ==========
+var classData={};
+
+// 第1类
+classData[1]=[
+{name:"0101 工业气体，单质",items:[["010061","氨"],["010066","无水氨"],["010082","氨水"],["010092","氮"],["010093","一氧化二氮"],["010183","氮气"],["010302","氟"],["010326","焊接用保护气体"],["010328","工业用固态气体"],["010333","干冰（二氧化碳）"],["010344","氦"],["010359","氢"],["010372","氪"],["010401","氖"],["010413","工业用氧"],["010457","氩"],["010551","氙"],["010732","工业用二氧化碳"]]},
+{name:"0102 工业化工原料",items:[["010014","酸"],["010058","盐酸溶液"],["010095","硝酸"],["010135","工业用硼酸"],["010150","碳酸"],["010185","盐酸"],["010304","氢氟酸"],["010396","无机酸"],["010425","过硫酸"],["010433","磷酸"],["010501","磺酸"],["010503","硫酸"],["010037","碱"],["010038","苛性碱"],["010048","氢氧化铝"],["010489","工业用苛性碱"],["010075","氧化锑"],["010102","氧化钡"],["010124","二氧化锰"],["010536","工业用二氧化钛"],["010046","矾土"],["010052","明矾"],["010057","氯化铵"],["010100","苏打灰"],["010134","硼砂"],["010146","碳酸盐"],["010172","碳酸钙"],["010228","氰化物"],["010397","工业用盐"],["010446","碳酸钾"],["010476","原盐"],["010554","氯化物"]]},
+{name:"0103 放射性元素及其化学品",items:[["010018","锕"],["010226","核反应堆用燃料"],["010253","锆"],["010442","重水"],["010443","核能用可裂变物质"]]},
+{name:"0104 工业科学用化学品",items:[["010077","纺织工业用上浆料"],["010091","纺织品上光化学品"],["010030","混凝土用凝结剂"],["010001","易燃制剂"],["010020","发动机燃料化学添加剂"],["010071","内燃机抗爆剂"],["010072","防冻剂"],["010023","水软化剂"],["010254","澄清剂"],["010005","硫化加速剂"],["010145","橡胶保护剂"],["010275","气体净化剂"],["010025","活性炭"]]},
+{name:"0105 农业园艺林业用化学品",items:[["010031","除杀真菌剂、除草剂、杀虫剂外的农业化学品"],["010209","花用保鲜剂"],["010236","脱叶剂"],["010480","保存种子用物质"],["010637","植物用微量元素制剂"]]},
+{name:"0106 化学试剂",items:[["010122","生物化学催化剂"],["010177","科学用化学制剂"],["010178","非医用非兽医用化学试剂"],["010181","实验室分析用化学品"]]},
+{name:"0109 肥料",items:[["010271","肥料"],["010043","海藻（肥料）"],["010053","土壤调节制剂"],["010094","氮肥"],["010524","种植土"],["010622","堆肥"],["010634","植物生长调节剂"]]},
+{name:"0113 食药用化学品",items:[["010044","食物防腐用化学品"],["010121","啤酒澄清剂"],["010210","制药工业用保存剂"],["010346","水果催熟用激素"],["010607","工业用人造增甜剂"],["010660","食品工业用酶制剂"]]},
+{name:"0115 工业用黏合剂",items:[["010002","工业用黏合剂"],["010028","粘贴海报用黏合剂"],["010078","工业用阿拉伯树胶"],["010170","鞋用黏合剂"],["010330","工业用明胶"],["010600","工业用胶"]]}
+];
+
+// 第9类
+classData[9]=[
+{name:"0901 电子计算机及外部设备",items:[["090372","计算机"],["090373","已录制的计算机程序"],["090590","计算机外围设备"],["090591","计算机软件"],["090537","计算机键盘"],["090614","鼠标"],["090612","监视器"],["090619","中央处理器"],["090642","笔记本电脑"],["090724","平板电脑"],["090717","可下载的计算机应用软件"],["090700","USB闪存盘"],["090749","智能手表"],["090748","智能眼镜"],["090636","电子字典"],["090644","计算器"],["090342","计算机存储装置"],["090599","已编码磁卡"],["090640","集成电路卡"],["090845","生物特征识别卡"],["090806","穿戴式计算机"],["090883","头戴式显示器"]]},
+{name:"0902 记录记数检测器",items:[["090137","计步器"],["090525","收银机"],["090686","自助取款机"],["090924","POS机"],["090911","自助结账终端"],["090952","生物特征识别扫描仪"],["090145","人脸识别设备"]]},
+{name:"0907 通信导航设备",items:[["090045","天线"],["090146","交换机"],["090358","导航仪器"],["090416","雷达设备"],["090423","电话机"],["090611","调制解调器"],["090674","卫星导航仪器"],["090701","GPS设备"],["090719","智能手机"],["090734","手机"],["090740","智能手机用套"],["090846","智能家居集线器"],["090906","路由器"]]},
+{name:"0908 音像设备",items:[["090077","录音机"],["090087","扬声器音箱"],["090190","扬声器"],["090341","扩音器"],["090351","麦克风"],["090468","电视机"],["090536","录像机"],["090630","摄像机"],["090671","头戴式耳机"],["090685","DVD播放机"],["090702","便携式媒体播放器"],["090849","智能音箱"],["090776","虚拟现实装置"],["090944","行车记录仪"]]},
+{name:"0913 电子电气元件",items:[["090539","半导体"],["090538","集成电路"],["090540","芯片"],["090125","印刷电路"],["090140","电容器"],["090164","电开关"],["090166","电插头"],["090191","断路器"],["090222","继电器"],["090049","变压器"],["090054","配电箱"],["090730","电源适配器"],["090704","LED"],["090470","遥控装置"]]},
+{name:"0921 眼镜及附件",items:[["090331","眼镜"],["090334","眼镜片"],["090335","眼镜框"],["090554","隐形眼镜"],["090648","太阳镜"],["090726","3D眼镜"]]},
+{name:"0922 电池充电器",items:[["090008","蓄电池"],["090083","蓄电池充电器"],["090266","电池充电器"],["090360","电池"],["090557","太阳能电池"],["090733","太阳能电池板"],["090862","手机充电器"],["090874","便携式充电器"]]}
+];
+
+// 第25类
+classData[25]=[
+{name:"2501 衣物",items:[["250045","服装"],["250034","毛衣"],["250042","衬衫"],["250064","裤子"],["250066","外衣"],["250071","针织服装"],["250086","外套"],["250087","防水服"],["250090","裙子"],["250094","运动衫"],["250109","连衣裙"],["250115","大衣"],["250121","夹克"],["250151","皮衣"],["250155","T恤衫"],["250026","内衣"],["250112","内裤"],["250114","乳罩"]]},
+{name:"2507 鞋",items:[["250003","鞋"],["250014","靴"],["250101","拖鞋"],["250111","凉鞋"],["250130","鞋"],["250132","运动鞋"],["250145","滑雪靴"]]},
+{name:"2508 帽",items:[["250012","帽子"],["250046","帽"]]},
+{name:"2509 袜",items:[["250006","长袜"],["250013","袜"],["250036","短袜"]]},
+{name:"2511 领带围巾",items:[["250060","领带"],["250069","围巾"],["250032","披肩"]]}
+];
+
+// 第35类
+classData[35]=[
+{name:"3501 广告",items:[["350039","广告"],["350040","无线电广告"],["350044","电视广告"],["350047","广告代理"],["350084","计算机网络上的在线广告"],["350104","广告片制作"],["350113","点击付费广告"]]},
+{name:"3502 工商管理辅助",items:[["350001","商业管理辅助"],["350020","商业管理咨询"],["350031","市场分析"],["350033","商业调查"],["350042","公共关系"],["350064","组织商业或广告展览"],["350065","提供商业信息"],["350096","特许经营的商业管理"]]},
+{name:"3503 为他人推销",items:[["350005","进出口代理"],["350030","拍卖"],["350071","为他人推销"],["350106","市场营销"],["350120","为商品和服务的买卖双方提供在线市场"]]},
+{name:"3507 财会",items:[["350015","会计"],["350017","商业审计"],["350073","税务筹划"],["350123","税务申报服务"]]}
+];
+
+// 第42类
+classData[42]=[
+{name:"4209 科学技术研究",items:[["420040","技术研究"],["420061","技术项目研究"],["420161","为他人研究和开发新产品"],["420222","科学研究"],["420277","人工智能技术咨询"]]},
+{name:"4216 外观设计",items:[["420049","工业品外观设计"],["420050","包装设计"],["420266","产品原型设计"]]},
+{name:"4217 建筑设计",items:[["420011","建筑学服务"],["420036","建筑学咨询"],["420048","室内装饰设计"],["420237","室内设计"]]},
+{name:"4220 计算机编程",items:[["420090","计算机编程"],["420139","计算机软件设计"],["420199","为他人创建和维护网站"],["420200","托管计算机网站"],["420209","提供互联网搜索引擎"],["420220","软件即服务(SaaS)"],["420248","平台即服务(PaaS)"]]}
+];
+
+// 第43类
+classData[43]=[
+{name:"4301 餐饮住宿",items:[["430024","咖啡馆"],["430025","自助餐厅"],["430027","餐厅"],["430102","餐馆"],["430108","快餐馆"],["430138","酒吧服务"],["430183","汽车旅馆"],["430209","外卖餐厅服务"]]}
+];
+
+// 为其余类别生成默认子类结构
+var subNames={
+2:[["0201","染料，媒染剂"],["0202","颜料"],["0203","食品着色剂"],["0204","油墨"],["0205","涂料，油漆"],["0206","防锈剂"],["0207","未加工天然树脂"]],
+3:[["0301","肥皂，香皂"],["0302","清洁去渍制剂"],["0303","抛光擦亮制剂"],["0304","研磨材料"],["0305","香料，香精油"],["0306","化妆品"],["0307","牙膏"],["0308","熏料"]],
+4:[["0401","工业用油及油脂"],["0402","液体气体燃料"],["0403","固体燃料"],["0404","工业用蜡"],["0405","照明用蜡烛"],["0406","吸收灰尘合成物"]],
+5:[["0501","药品，消毒剂"],["0502","医用营养品"],["0503","净化制剂"],["0504","兽药"],["0505","杀虫剂除莠剂"],["0506","卫生用品"],["0507","牙科用料"]],
+6:[["0601","普通金属及其合金"],["0602","金属管及配件"],["0603","金属建筑材料"],["0607","钉及紧固件"],["0608","家具门窗金属附件"],["0609","日用五金"],["0610","非电子锁"],["0613","金属容器"]],
+7:[["0701","农业机械"],["0702","渔牧业机械"],["0709","食品业机械"],["0723","厨房家用器具"],["0748","发电机马达"],["0749","泵阀压缩机"],["0752","清洁机械"]],
+8:[["0801","手动研磨器具"],["0802","小农具"],["0806","理发修指甲工具"],["0807","非动力手工具"],["0810","刀剪"],["0812","餐具刀叉匙"]],
+10:[["1001","外科医疗仪器"],["1002","牙科设备"],["1003","医疗电子仪器"],["1004","医疗辅助器具"],["1005","奶嘴奶瓶"],["1006","性用品"],["1008","矫形用品"]],
+11:[["1101","照明设备"],["1104","烹调及加热设备"],["1105","制冷冷藏设备"],["1106","干燥通风空调"],["1107","加温蒸汽设备"],["1108","供暖水暖管件"],["1109","卫生设备"],["1110","消毒净化设备"]],
+12:[["1201","火车零部件"],["1202","汽车摩托车"],["1204","自行车三轮车"],["1206","轮椅手推车"],["1208","轮胎"],["1209","空用运载工具"],["1210","水用运载工具"]],
+13:[["1301","火器军火"],["1302","爆炸物"],["1303","烟火爆竹"]],
+14:[["1401","贵金属"],["1403","珠宝首饰宝石"],["1404","钟表计时器"]],
+15:[["1501","乐器"],["1502","乐器辅助用品"]],
+16:[["1601","工业用纸"],["1603","生活用纸"],["1605","办公日用纸"],["1606","印刷出版物"],["1609","包装用纸塑料"],["1611","办公文具"],["1614","笔"]],
+17:[["1701","橡胶古塔胶"],["1702","密封减震制品"],["1703","橡胶树脂纤维"],["1704","软管"],["1705","保温隔热材料"],["1706","绝缘材料"]],
+18:[["1801","皮革人造皮革"],["1802","箱包旅行袋"],["1804","雨伞"],["1806","动物用具"]],
+19:[["1901","木材"],["1902","土沙石料"],["1904","水泥"],["1906","建筑砖瓦"],["1909","非金属建筑材料"],["1911","建筑用玻璃"]],
+20:[["2001","家具"],["2002","非金属容器"],["2004","镜子画框"],["2005","竹藤棕草"],["2013","垫枕"]],
+21:[["2101","厨房炊事用具"],["2102","玻璃器皿"],["2103","瓷器陶器"],["2105","茶具酒具"],["2106","家庭卫生器具"],["2111","保温保冷用具"]],
+22:[["2201","缆绳线带"],["2202","网遮蓬帐篷"],["2203","袋子"],["2205","纤维原料"]],
+23:[["2301","纺织用纱丝"],["2302","线"]],
+24:[["2401","纺织品布料"],["2405","毛巾浴巾"],["2406","床上用品"],["2407","室内遮盖物"]],
+26:[["2601","花边饰品"],["2602","服饰品"],["2603","纽扣拉链"],["2604","假发"],["2606","假花"]],
+27:[["2701","地毯"],["2703","垫及铺地板用品"],["2704","墙纸壁挂"]],
+28:[["2801","娱乐器械"],["2802","玩具"],["2803","棋牌"],["2804","球类器材"],["2805","健身器材"],["2807","体操冰雪器材"],["2811","钓具"]],
+29:[["2901","肉家禽野味"],["2902","非活水产品"],["2903","罐头食品"],["2905","加工蔬菜"],["2906","蛋品"],["2907","奶及乳制品"],["2908","食用油脂"],["2911","加工坚果"],["2913","豆腐制品"]],
+30:[["3001","咖啡可可"],["3002","茶"],["3003","糖"],["3004","糖果"],["3005","蜂蜜蜂王浆"],["3006","面包糕点"],["3007","方便食品"],["3008","米面粉"],["3009","面条"],["3012","食用淀粉"],["3013","食用冰"],["3015","酱油醋"],["3016","调味品"]],
+31:[["3101","未加工林业产品"],["3102","未加工谷物"],["3104","活动物"],["3105","未加工水果"],["3106","新鲜蔬菜"],["3107","种子"],["3108","动物饲料"]],
+32:[["3201","啤酒"],["3202","不含酒精饮料"],["3203","糖浆及饮料制剂"]],
+33:[["3301","含酒精饮料"]],
+34:[["3401","烟草"],["3402","烟具"],["3407","电子烟"]],
+36:[["3601","保险"],["3602","金融事务"],["3604","不动产事务"],["3609","典当"]],
+37:[["3701","建设维修信息"],["3702","建筑工程"],["3704","建筑物装饰修理"],["3706","机械电器安装修理"],["3707","车辆维修"]],
+38:[["3801","无线电电视播放"],["3802","通信服务"]],
+39:[["3901","运输及包装"],["3903","陆地运输"],["3905","其他运输"],["3906","货物储藏"],["3910","投递服务"],["3911","旅行安排"]],
+40:[["4001","综合加工"],["4002","金属材料处理"],["4008","食物饮料加工"],["4010","皮革服装加工"],["4011","影像加工"],["4012","废物处理"],["4014","水处理"]],
+41:[["4101","教育"],["4102","组织安排活动"],["4104","出版服务"],["4105","文娱体育活动"]],
+44:[["4401","医疗服务"],["4402","卫生美容服务"],["4403","动物服务"],["4404","农业园艺服务"]],
+45:[["4501","安全服务"],["4502","提供人员服务"],["4505","单一服务"],["4506","法律服务"]]
+};
+
+// 为未定义详细数据的类别生成默认数据
+for(var c=1;c<=45;c++){
+    if(!classData[c]){
+        if(subNames[c]){
+            classData[c]=[];
+            for(var i=0;i<subNames[c].length;i++){
+                classData[c].push({name:subNames[c][i][0]+" "+subNames[c][i][1],items:[["","点击查看官方分类表详情"]]});
+            }
+        }else{
+            classData[c]=[{name:cnMap[c]+" 详细分类",items:[["","请参考官方分类表"]]}];
         }
-        function toggleSubclass(header) {
-            header.classList.toggle('open');
-            header.nextElementSibling.classList.toggle('show');
-        }
-        function searchItems() {
-            const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
-            let totalShown = 0;
-            document.querySelectorAll('.subclass-section').forEach(section => {
-                const items = section.querySelectorAll('.item-tag');
-                let sectionShown = 0;
-                items.forEach(item => {
-                    const kw = item.getAttribute('data-keywords').toLowerCase();
-                    if (!keyword || kw.includes(keyword)) { item.classList.remove('hidden'); sectionShown++; totalShown++; }
-                    else { item.classList.add('hidden'); }
-                });
-                const itemsDiv = section.querySelector('.subclass-items');
-                const header = section.querySelector('.subclass-header');
-                if (keyword && sectionShown > 0) { itemsDiv.classList.add('show'); header.classList.add('open'); }
-                if (!keyword) { itemsDiv.classList.remove('show'); header.classList.remove('open'); }
-            });
-            document.getElementById('showItems').textContent = totalShown;
-            document.getElementById('noResult').style.display = (totalShown === 0 && keyword) ? 'block' : 'none';
-        }
-        renderAll(subClasses);
-        setTimeout(() => {
-            const firstHeader = document.querySelector('.subclass-header');
-            if (firstHeader) { firstHeader.classList.add('open'); firstHeader.nextElementSibling.classList.add('show'); }
-        }, 100);
-    </script>
+    }
+}
+
+// ========== 主逻辑 ==========
+var urlParams=new URLSearchParams(window.location.search);
+var classNum=parseInt(urlParams.get('class'))||1;
+var className=cnMap[classNum]||"未知类别";
+var classType=classNum<=34?'goods':'service';
+document.getElementById('pageTitle').textContent='第'+classNum+'类 - '+className;
+document.getElementById('classType').textContent=classType==='goods'?'商品类（第1-34类）':'服务类（第35-45类）';
+
+var subClasses=classData[classNum]||[];
+var totalSub=subClasses.length;
+var totalItems=0;
+subClasses.forEach(function(s){totalItems+=s.items.length;});
+document.getElementById('totalSub').textContent=totalSub;
+document.getElementById('totalItems').textContent=totalItems;
+document.getElementById('showItems').textContent=totalItems;
+
+function renderAll(data){
+    var area=document.getElementById('contentArea');
+    var html='';
+    data.forEach(function(sub,idx){
+        html+='<div class="subclass-section"><div class="subclass-header" onclick="toggleSubclass(this)"><h3><i class="fas fa-folder"></i> '+sub.name+' <span style="color:#94a3b8;font-size:.8rem;">('+sub.items.length+'项)</span></h3><i class="fas fa-chevron-down toggle-icon"></i></div><div class="subclass-items" id="subItems'+idx+'">';
+        sub.items.forEach(function(item){
+            html+='<span class="item-tag" data-keywords="'+item[1]+' '+item[0]+'"><span class="code">'+item[0]+'</span>'+item[1]+'</span>';
+        });
+        html+='</div></div>';
+    });
+    area.innerHTML=html;
+}
+
+function toggleSubclass(header){
+    header.classList.toggle('open');
+    header.nextElementSibling.classList.toggle('show');
+}
+
+function searchItems(){
+    var keyword=document.getElementById('searchInput').value.trim().toLowerCase();
+    var totalShown=0;
+    document.querySelectorAll('.subclass-section').forEach(function(section){
+        var items=section.querySelectorAll('.item-tag');
+        var sectionShown=0;
+        items.forEach(function(item){
+            var kw=item.getAttribute('data-keywords').toLowerCase();
+            if(!keyword||kw.indexOf(keyword)>-1){item.classList.remove('hidden');sectionShown++;totalShown++;}
+            else{item.classList.add('hidden');}
+        });
+        var itemsDiv=section.querySelector('.subclass-items');
+        var header=section.querySelector('.subclass-header');
+        if(keyword&&sectionShown>0){itemsDiv.classList.add('show');header.classList.add('open');}
+        if(!keyword){itemsDiv.classList.remove('show');header.classList.remove('open');}
+    });
+    document.getElementById('showItems').textContent=totalShown;
+    document.getElementById('noResult').style.display=(totalShown===0&&keyword)?'block':'none';
+}
+
+renderAll(subClasses);
+setTimeout(function(){
+    var firstHeader=document.querySelector('.subclass-header');
+    if(firstHeader){firstHeader.classList.add('open');firstHeader.nextElementSibling.classList.add('show');}
+},100);
+</script>
 </body>
 </html>
