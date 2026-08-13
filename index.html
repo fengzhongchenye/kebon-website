@@ -173,7 +173,10 @@
             </div>
             <div class="detail-section">
                 <h4>📌 备注</h4>
-                <div class="detail-content" id="modalNotes"></div>
+                <div class="detail-content" id="modalNotes"></div><div class="detail-section" id="modalSubLinkSection" style="display:none;">
+    <h4>📎 相关文件</h4>
+    <div id="modalSubLink"></div>
+</div>
             </div>
         </div>
     </div>
@@ -288,6 +291,16 @@
             document.getElementById('modalPolicy').textContent = g.policy || '暂无';
             document.getElementById('modalMaterials').textContent = g.materials || '暂无';
             document.getElementById('modalNotes').textContent = g.notes || '暂无';
+           
+            // 显示子链接
+            const subLinkContainer = document.getElementById('modalSubLink');
+            if (g.subLink) {
+                subLinkContainer.innerHTML = `<a href="${g.subLink.url}" class="sub-link-btn" target="_blank"><i class="fas fa-file-alt"></i> ${g.subLink.label}</a>`;
+                subLinkContainer.style.display = 'block';
+            } else {
+                subLinkContainer.style.display = 'none';
+            }
+            
             document.getElementById('grantModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
