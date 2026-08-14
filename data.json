@@ -111,7 +111,7 @@
       "subLinks": [
         { "label": "附件1：项目申报指南", "url": "attachment1.pdf" },
         { "label": "附件2：费用明细及票据清单", "url": "attachment2.pdf" },
-        { "label": "附件3：场景要素清单", "url": "attachment3.pdf" }
+        { "label": "附件3：场景要素清单", "url": "attachment3.pdf" },
         { "label": "附件4：技术改造扶持操作规程", "url": "attachment4.pdf" },
         { "label": "附件5：专项审计要求", "url": "attachment5.pdf" }
       ]
