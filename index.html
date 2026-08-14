@@ -286,20 +286,24 @@
         }
 
        function openGrantDetail(index) {
-    const g = window.appData.grants[index];
-    document.getElementById('grantModalTitle').textContent = '📋 ' + g.title;
-    document.getElementById('modalConditions').textContent = g.conditions || '暂无';
-    document.getElementById('modalPolicy').textContent = g.policy || '暂无';
-    document.getElementById('modalMaterials').textContent = g.materials || '暂无';
-
-    var notesHtml = g.notes || '暂无';
-    if (index === 3) {
-        notesHtml += '<br><br><a href="srgn-standard.html" style="color:#2563eb;font-weight:700;text-decoration:underline;" target="_blank">📎 专精特新“小巨人”企业认定标准 →</a>';
-    }
-    document.getElementById('modalNotes').innerHTML = notesHtml;
-
-    document.getElementById('grantModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
+            const g = window.appData.grants[index];
+            document.getElementById('grantModalTitle').textContent = '📋 ' + g.title;
+            document.getElementById('modalConditions').textContent = g.conditions || '暂无';
+            document.getElementById('modalPolicy').textContent = g.policy || '暂无';
+            document.getElementById('modalMaterials').textContent = g.materials || '暂无';
+            document.getElementById('modalNotes').textContent = g.notes || '暂无';
+           
+            // 显示子链接
+            const subLinkContainer = document.getElementById('modalSubLink');
+            if (g.subLink) {
+                subLinkContainer.innerHTML = `<a href="${g.subLink.url}" class="sub-link-btn" target="_blank"><i class="fas fa-file-alt"></i> ${g.subLink.label}</a>`;
+                subLinkContainer.style.display = 'block';
+            } else {
+                subLinkContainer.style.display = 'none';
+            }
+            
+            document.getElementById('grantModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeGrantModal() {
