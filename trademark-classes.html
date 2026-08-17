@@ -16,18 +16,18 @@
         .search-box input { flex: 1; min-width: 200px; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 30px; font-size: 1rem; outline: none; }
         .search-box input:focus { border-color: #2563eb; }
         .search-box button { padding: 12px 25px; background: #2563eb; color: white; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer; font-weight: 600; }
-        .search-results { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); margin-bottom: 20px; display: none; max-height: 400px; overflow-y: auto; }
+        .search-results { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); margin-bottom: 20px; display: none; max-height: 500px; overflow-y: auto; }
         .search-results h3 { color: #0a2c5c; margin-bottom: 10px; }
-        .result-item { padding: 10px 14px; border-radius: 10px; margin-bottom: 5px; background: #f8fafc; border-left: 3px solid #2563eb; cursor: pointer; transition: 0.2s; }
+        .result-item { padding: 8px 14px; border-radius: 8px; margin-bottom: 4px; background: #f8fafc; border-left: 3px solid #2563eb; cursor: pointer; transition: 0.15s; font-size: 0.9rem; }
         .result-item:hover { background: #dbeafe; }
-        .result-code { color: #94a3b8; font-size: 0.8rem; margin-right: 8px; font-weight: 600; }
-        .result-class { float: right; color: #2563eb; font-size: 0.8rem; font-weight: 600; }
+        .result-code { color: #94a3b8; font-size: 0.75rem; margin-right: 8px; font-weight: 600; display: inline-block; min-width: 55px; }
+        .result-class { float: right; color: #2563eb; font-size: 0.75rem; font-weight: 600; }
         .stats { text-align: center; margin-bottom: 15px; color: #64748b; font-size: 0.9rem; }
         .class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
         .class-card { background: white; border-radius: 15px; padding: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); border-left: 4px solid #2563eb; cursor: pointer; transition: 0.2s; text-decoration: none; color: inherit; display: block; }
         .class-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .class-card .class-num { font-size: 1.4rem; font-weight: 800; color: #2563eb; margin-bottom: 5px; }
-        .class-card .class-name { font-weight: 600; color: #0a2c5c; font-size: 1.05rem; }
+        .class-card .class-num { font-size: 1.3rem; font-weight: 800; color: #2563eb; margin-bottom: 5px; }
+        .class-card .class-name { font-weight: 600; color: #0a2c5c; font-size: 1rem; }
         .class-type { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; }
         .type-goods { background: #dbeafe; color: #1e40af; }
         .type-service { background: #fef3c7; color: #92400e; }
@@ -37,22 +37,22 @@
 <body>
     <div class="header">
         <h1><i class="fas fa-sitemap"></i> 商标注册用商品和服务分类表</h1>
-        <p style="margin-top:8px;opacity:0.9;">支持全类目深度搜索</p>
+        <p style="margin-top:8px;opacity:0.9;">支持全类目深度搜索最小商品项</p>
         <a href="index.html">← 返回首页</a>
     </div>
 
     <div class="container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="搜索商品/服务名称或编号（如：手机、口红、090001、餐厅...）" oninput="searchAll()">
+            <input type="text" id="searchInput" placeholder="搜索具体商品/服务（如：手机、口红、洗发水、餐厅...）" oninput="searchAll()">
             <button onclick="searchAll()"><i class="fas fa-search"></i> 搜索</button>
         </div>
         
         <div class="search-results" id="searchResults">
-            <h3><i class="fas fa-list"></i> 搜索结果</h3>
+            <h3><i class="fas fa-list"></i> 搜索结果 <span id="resultCount" style="font-size:0.8rem;color:#64748b;"></span></h3>
             <div id="resultList"></div>
         </div>
         
-        <div class="stats">共 45 个类别 | 点击类别查看详细小项</div>
+        <div class="stats">共 45 个类别 | 点击类别查看全部小项</div>
         <div class="class-grid" id="classGrid"></div>
     </div>
 
@@ -62,57 +62,37 @@
         for(var i=1;i<=34;i++) classTypes[i]='goods';
         for(var i=35;i<=45;i++) classTypes[i]='service';
 
-        // ========== 搜索数据（从详情页提取的核心关键词数据） ==========
-        // 为了搜索功能，内置每个类别的关键词列表
-        var searchData = {
-            1: ["氨","氮","氢","氧","氦","酸","碱","盐","肥料","工业用化学品","黏合剂","纸浆"],
-            2: ["颜料","油漆","清漆","染料","油墨","防锈剂","着色剂"],
-            3: ["肥皂","洗发水","牙膏","香水","化妆品","口红","面膜","洗衣粉","洗洁精","清洁剂"],
-            4: ["工业用油","润滑油","燃料","蜡烛","除尘剂","汽油","柴油"],
-            5: ["药品","医疗器械","消毒剂","营养品","婴儿食品","维生素","绷带","口罩"],
-            6: ["金属","钢管","铁丝","保险箱","五金","金属门","金属窗","螺丝","锁"],
-            7: ["机器","机床","马达","食品机械","农业机械","打印机","3D打印机","机器人","洗衣机","发电机"],
-            8: ["刀","剪刀","锤子","螺丝刀","剃须刀","指甲刀","餐具"],
-            9: ["手机","电脑","软件","APP","相机","眼镜","电池","充电器","平板","智能手表","耳机","芯片","传感器","GPS","打印机","电视","摄像机","麦克风","望远镜"],
-            10: ["医疗器械","牙科","助听器","口罩","避孕套","血压计","体温计","轮椅"],
-            11: ["灯","灯泡","手电筒","电饭煲","微波炉","冰箱","空调","热水器","风扇","加湿器"],
-            12: ["汽车","电动车","自行车","婴儿车","轮胎","无人机","摩托车","飞机","船"],
-            13: ["枪支","弹药","烟花","爆竹","信号弹"],
-            14: ["珠宝","首饰","手表","钻石","戒指","项链","耳环","黄金","银饰"],
-            15: ["钢琴","吉他","小提琴","鼓","乐器","笛子","二胡"],
-            16: ["纸","书籍","文具","笔记本","笔","文件夹","日历","贴纸"],
-            17: ["橡胶","塑料","绝缘材料","胶带","软管","防水材料"],
-            18: ["箱包","钱包","背包","雨伞","皮带","行李箱","手提包"],
-            19: ["石材","水泥","瓷砖","玻璃","建材","木材","砖","瓦"],
-            20: ["家具","床垫","枕头","镜子","沙发","桌子","椅子","床","衣柜"],
-            21: ["锅","碗","水杯","保温杯","梳子","牙刷","茶具","餐具","筷子"],
-            22: ["绳索","帐篷","编织袋","渔网","帆布"],
-            23: ["纱","线","毛线","丝线","棉线"],
-            24: ["床单","被套","毛巾","浴巾","窗帘","被子","枕套"],
-            25: ["衣服","裤子","裙子","鞋子","帽子","袜子","围巾","T恤","衬衫","外套","羽绒服","内衣","领带"],
-            26: ["纽扣","拉链","发夹","假发","花边","刺绣"],
-            27: ["地毯","地垫","墙纸","体操垫","瑜伽垫"],
-            28: ["玩具","游戏机","健身器材","钓鱼竿","篮球","足球","球拍","积木","滑板"],
-            29: ["肉","鱼","食用油","牛奶","奶酪","果冻","坚果","蛋","火腿","香肠"],
-            30: ["面包","糕点","咖啡","茶","糖","蜂蜜","调味品","方便面","巧克力","冰淇淋","饺子","面条","酱油","醋"],
-            31: ["水果","蔬菜","花卉","树木","宠物食品","饲料","谷物","新鲜水果"],
-            32: ["啤酒","矿泉水","汽水","果汁","奶茶","运动饮料"],
-            33: ["白酒","红酒","葡萄酒","黄酒","洋酒","鸡尾酒"],
-            34: ["香烟","雪茄","电子烟","打火机","火柴","烟灰缸"],
-            35: ["广告","市场营销","推销","电商","商业管理","会计","人事管理"],
-            36: ["银行","保险","贷款","不动产","基金","支付","担保","理财"],
-            37: ["建筑","装修","汽车维修","清洁","电梯安装","防水"],
-            38: ["电信","网络","电视广播","视频会议","电子邮件","5G","宽带"],
-            39: ["物流","快递","旅游","租车","停车场","搬家","仓储"],
-            40: ["打磨","金属处理","印刷","水处理","空气净化"],
-            41: ["教育","培训","学校","健身","出版","演出","游戏","翻译"],
-            42: ["软件开发","网站建设","APP开发","设计","云计算","人工智能","大数据"],
-            43: ["餐厅","酒店","咖啡馆","外卖","养老院","托儿所"],
-            44: ["医院","美容院","理发店","按摩","宠物医院","园艺"],
-            45: ["法律","知识产权","安保","婚介","交友","殡葬"]
+        // ========== 最小商品/服务项搜索数据（核心精选版） ==========
+        var itemData = {
+            3: [["030002","洗发水"],["030004","香水"],["030006","护肤霜"],["030007","口红"],["030012","肥皂"],["030022","面膜"],["030065","化妆品"],["030066","化妆棉"],["030134","洗发液"],["030135","香水"],["030152","香皂"],["030258","牙膏"],["030279","洗洁精"]],
+            5: [["050001","药品"],["050002","医疗器械"],["050003","消毒剂"],["050005","空气净化制剂"],["050090","维生素制剂"],["050298","婴儿食品"],["050350","医用营养品"],["050384","营养补充剂"],["050412","婴儿尿布"]],
+            7: [["070026","搅拌机"],["070211","电动绞肉机"],["070231","洗碗机"],["070267","混合机"],["070295","和面机"],["070537","自动售货机"],["070555","3D打印机"]],
+            9: [["090372","计算机"],["090537","计算机键盘"],["090590","计算机外围设备"],["090591","计算机软件"],["090612","监视器"],["090614","鼠标"],["090619","中央处理器"],["090642","笔记本电脑"],["090657","电子出版物"],["090658","可下载的计算机程序"],["090671","头戴式耳机"],["090700","USB闪存盘"],["090701","GPS设备"],["090717","可下载的手机应用软件"],["090719","智能手机"],["090724","平板电脑"],["090734","手机"],["090748","智能眼镜"],["090749","智能手表"],["090849","智能音箱"],["090862","手机充电器"]],
+            11: [["110021","灯泡"],["110024","电灯"],["110040","灯"],["110051","手电筒"],["110107","电炊具"],["110274","冰箱"],["110303","电热水壶"],["110314","抽油烟机"],["110315","电风扇"],["110317","微波炉"],["110337","电蒸锅"]],
+            12: [["120027","飞机"],["120031","轮胎"],["120044","自行车"],["120147","摩托车"],["120199","汽车"],["120297","电动自行车"],["120339","电动滑板"]],
+            14: [["140016","手表"],["140035","钻石"],["140050","珠宝首饰"],["140070","珍珠"],["140107","戒指"],["140118","耳环"]],
+            16: [["160006","纸"],["160032","报纸"],["160068","笔记本"],["160095","书籍"],["160179","印刷出版物"],["160209","文具"],["160270","日历"]],
+            18: [["180010","钱包"],["180058","背包"],["180077","手提包"],["180085","手提箱"],["180092","行李箱"]],
+            20: [["200041","家具"],["200050","椅子"],["200070","桌子"],["200079","床垫"],["200102","床"],["200183","沙发"],["200316","婴儿床"],["200320","衣柜"]],
+            21: [["210039","碗"],["210076","梳子"],["210199","厨房用容器"],["210220","杯"],["210227","餐具"],["210250","牙刷"],["210273","厨房用具"],["210311","筷子"]],
+            24: [["240040","床单"],["240072","毛巾"],["240079","蚊帐"],["240080","枕套"]],
+            25: [["250003","鞋"],["250012","帽子"],["250013","袜"],["250026","内衣"],["250031","腰带"],["250034","毛衣"],["250042","衬衫"],["250045","服装"],["250060","领带"],["250064","裤子"],["250069","围巾"],["250086","外套"],["250090","裙子"],["250109","连衣裙"],["250132","运动鞋"],["250155","T恤衫"]],
+            29: [["290046","肉"],["290047","鱼"],["290032","食用油"],["290039","奶"],["290065","酸奶"],["290086","蛋"],["290097","香肠"],["290138","虾"],["290140","豆腐"],["290192","奶粉"]],
+            30: [["300016","饼干"],["300020","糖果"],["300024","可可"],["300026","咖啡"],["300029","蛋糕"],["300037","茶"],["300038","巧克力"],["300046","冰淇淋"],["300049","食盐"],["300065","食用淀粉"],["300069","糖"],["300081","醋"],["300093","面包"],["300098","蜂蜜"],["300103","面条"],["300108","糕点"],["300119","米"],["300179","酱油"],["300233","饺子"]],
+            32: [["320002","啤酒"],["320010","果汁"],["320012","水"],["320015","矿泉水"],["320028","苏打水"],["320031","无酒精饮料"],["320060","能量饮料"]],
+            33: [["330013","葡萄酒"],["330019","白兰地"],["330023","威士忌"],["330034","伏特加"],["330039","烧酒"]],
+            35: [["350005","进出口代理"],["350015","会计"],["350039","广告"],["350071","为他人推销"],["350084","在线广告"],["350096","特许经营管理"],["350106","市场营销"]],
+            36: [["360013","银行"],["360012","保险承保"],["360024","金融贷款"],["360029","融资服务"],["360054","金融咨询"]],
+            37: [["370006","汽车保养"],["370029","建筑"],["370068","室内外油漆"]],
+            38: [["380005","电视播放"],["380022","移动电话通信"],["380025","电子邮件传输"],["380049","视频会议服务"]],
+            39: [["390039","货运"],["390048","运输"],["390075","快递服务"],["390084","旅行预订"]],
+            41: [["410017","教育"],["410024","书籍出版"],["410054","健身俱乐部"],["410094","在线游戏服务"],["410103","翻译"]],
+            42: [["420090","计算机编程"],["420139","计算机软件设计"],["420199","网站建设"],["420209","搜索引擎"],["420220","软件即服务(SaaS)"],["420248","平台即服务(PaaS)"]],
+            43: [["430024","咖啡馆"],["430027","餐厅"],["430102","餐馆"],["430108","快餐馆"],["430138","酒吧服务"],["430183","汽车旅馆"]],
+            44: [["440020","美容服务"],["440034","理发"],["440059","医院"],["440086","按摩"],["440092","配镜服务"]],
+            45: [["450005","交友服务"],["450112","婚姻介绍"],["450206","知识产权咨询"],["450207","版权管理"],["450211","诉讼服务"]]
         };
 
-        // 渲染类别卡片
         function renderGrid() {
             var html = '';
             for(var i=1;i<=45;i++){
@@ -125,7 +105,6 @@
             document.getElementById('classGrid').innerHTML = html;
         }
 
-        // 搜索函数
         function searchAll() {
             var keyword = document.getElementById('searchInput').value.trim().toLowerCase();
             var resultsDiv = document.getElementById('searchResults');
@@ -139,17 +118,18 @@
             }
             
             var results = [];
-            for(var c=1;c<=45;c++){
-                if(searchData[c]) {
-                    searchData[c].forEach(function(item){
-                        if(item.toLowerCase().indexOf(keyword) > -1) {
-                            results.push({classNum:c, name:item});
-                        }
-                    });
-                }
-                // 也搜索类别名
-                if(classNames[c] && classNames[c].indexOf(keyword) > -1) {
-                    results.push({classNum:c, name:classNames[c]});
+            // 搜索最小商品项
+            for(var c in itemData) {
+                itemData[c].forEach(function(item){
+                    if(item[1].toLowerCase().indexOf(keyword) > -1 || item[0].indexOf(keyword) > -1) {
+                        results.push({classNum:parseInt(c), code:item[0], name:item[1]});
+                    }
+                });
+            }
+            // 也搜索类别名
+            for(var cn=1;cn<=45;cn++){
+                if(classNames[cn] && classNames[cn].indexOf(keyword) > -1) {
+                    results.push({classNum:cn, code:'', name:classNames[cn]+'（类名）'});
                 }
             }
             
@@ -158,17 +138,19 @@
                 var uniqueResults = [];
                 var seen = {};
                 results.forEach(function(r){
-                    var key = r.classNum + '-' + r.name;
+                    var key = r.classNum + '-' + r.code + '-' + r.name;
                     if(!seen[key]) { seen[key] = true; uniqueResults.push(r); }
                 });
                 
                 resultsDiv.style.display = 'block';
-                resultList.innerHTML = uniqueResults.slice(0,50).map(function(r){
+                resultList.innerHTML = uniqueResults.slice(0,100).map(function(r){
                     return '<div class="result-item" onclick="location.href=\'trademark-class-detail.html?class='+r.classNum+'\'">' +
-                           '<span class="result-class">第'+r.classNum+'类 '+classNames[r.classNum]+'</span>' +
+                           '<span class="result-class">第'+r.classNum+'类</span>' +
+                           (r.code ? '<span class="result-code">'+r.code+'</span>' : '') +
                            '<span class="result-name">'+r.name+'</span>' +
                            '</div>';
                 }).join('');
+                document.getElementById('resultCount').textContent = '('+uniqueResults.length+'个匹配)';
                 grid.style.display = 'none';
             } else {
                 resultsDiv.style.display = 'none';
