@@ -274,6 +274,15 @@
                 });
                 html += `</div></div>`;
             }
+
+            // 子模块
+            if (s.subModules && s.subModules.length > 0) {
+                html += `<div class="detail-section"><h4>📦 子模块</h4><div class="sub-links">`;
+                s.subModules.forEach(mod => {
+                    html += `<a href="javascript:void(0)" class="sub-link-btn" onclick="openSubModule('${mod.id}')"><i class="fas ${mod.icon}"></i> ${mod.title}</a>`;
+                });
+                html += `</div></div>`;
+            }
             
             document.getElementById('serviceModalContent').innerHTML = html;
             document.getElementById('serviceModal').classList.add('active');
@@ -283,6 +292,22 @@
         function closeServiceModal() {
             document.getElementById('serviceModal').classList.remove('active');
             document.body.style.overflow = '';
+        }
+
+        function openSubModule(id) {
+            closeServiceModal();
+            const overseas = window.appData.services.find(s => s.id === 'overseas');
+            if (!overseas || !overseas.subModules) return;
+            const mod = overseas.subModules.find(m => m.id === id);
+            if (!mod) return;
+            document.getElementById('serviceModalTitle').textContent = mod.title;
+            let html = '';
+            if (mod.definition) html += `<div class="detail-section"><h4>📖 定义</h4><div class="detail-content">${mod.definition}</div></div>`;
+            if (mod.categories) html += `<div class="detail-section"><h4>📂 注册途径</h4><div class="detail-content">${mod.categories}</div></div>`;
+            if (mod.business) html += `<div class="detail-section"><h4>💼 业务流程</h4><div class="detail-content">${mod.business}</div></div>`;
+            document.getElementById('serviceModalContent').innerHTML = html;
+            document.getElementById('serviceModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function openGrantDetail(index) {
