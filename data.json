@@ -50,13 +50,33 @@
       "business": "<strong>版权业务范围：</strong><br><br>1. <strong>作品著作权登记</strong><br>2. <strong>软件著作权登记</strong> — 高新企业认定必备<br>3. <strong>版权变更与转让</strong><br>4. <strong>版权维权</strong><br>5. <strong>版权运营</strong>"
     },
     {
-      "id": "lawsuit",
-      "icon": "fa-gavel",
-      "title": "知识产权诉讼",
-      "desc": "侵权调查、行政查处、司法诉讼，捍卫合法权益。",
-      "definition": "<strong>知识产权诉讼</strong>是指因知识产权侵权、权属争议、合同纠纷等引发的法律诉讼。",
-      "categories": "",
-      "business": "<strong>诉讼业务范围：</strong><br><br>1. <strong>侵权调查取证</strong><br>2. <strong>行政投诉查处</strong><br>3. <strong>司法诉讼</strong><br>4. <strong>电商平台投诉</strong><br>5. <strong>展会维权</strong><br>6. <strong>不正当竞争</strong>"
+      "id": "overseas",
+      "icon": "fa-globe",
+      "title": "海外业务",
+      "desc": "海外商标注册、海外专利申请，助力企业出海。",
+      "definition": "<strong>海外业务</strong>是科邦知识产权为企业提供的国际知识产权保护服务，涵盖海外商标注册和海外专利申请两大板块，帮助企业品牌和技术在全球范围内获得法律保护。",
+      "categories": "<strong>海外业务包含：</strong><br><br>1. <strong>海外商标</strong> — 马德里国际商标注册、欧盟商标注册、单一国家商标注册<br>2. <strong>海外专利</strong> — PCT国际专利申请、巴黎公约途径、单一国家专利申请",
+      "business": "<strong>海外业务服务优势：</strong><br><br>1. 专业团队，熟悉各国知识产权法规<br>2. 一站式服务，覆盖全球200+国家和地区<br>3. 本地化支持，多语种沟通无障碍<br>4. 费用透明，无隐藏收费<br>5. 全程跟踪，实时进度汇报",
+      "subModules": [
+        {
+          "id": "overseas-trademark",
+          "icon": "fa-trademark",
+          "title": "海外商标",
+          "desc": "马德里国际商标、欧盟商标、单一国家商标注册。",
+          "definition": "<strong>海外商标</strong>是指企业在境外国家或地区注册的商标，用于保护品牌在国际市场上的合法权益。商标具有地域性，在国内注册的商标在海外不受保护，需在目标国家或地区单独注册。",
+          "categories": "<strong>海外商标注册途径：</strong><br><br>1. <strong>马德里国际注册</strong> — 一份申请，指定多个成员国，费用低、效率高，覆盖全球130+国家<br><br>2. <strong>欧盟商标注册</strong> — 一份申请覆盖欧盟27个成员国，统一审查、统一保护<br><br>3. <strong>单一国家注册</strong> — 在特定国家（如美国、日本、韩国）单独申请，灵活精准<br><br>4. <strong>非洲知识产权组织（OAPI）</strong> — 一份申请覆盖非洲17个国家<br><br>5. <strong>非洲地区工业产权组织（ARIPO）</strong> — 覆盖非洲英语区国家",
+          "business": "<strong>海外商标业务流程：</strong><br><br>1. <strong>商标检索与分析</strong> — 在目标国家进行商标近似检索<br>2. <strong>申请准备</strong> — 确定类别、准备申请材料<br>3. <strong>提交申请</strong> — 向目标国家/组织提交<br>4. <strong>官方审查</strong> — 形式审查+实质审查<br>5. <strong>公告与异议</strong> — 公告期通常为1-3个月<br>6. <strong>核准注册</strong> — 获得商标注册证书<br>7. <strong>后续维护</strong> — 续展、变更、转让、监测"
+        },
+        {
+          "id": "overseas-patent",
+          "icon": "fa-lightbulb",
+          "title": "海外专利",
+          "desc": "PCT国际专利申请、巴黎公约途径。",
+          "definition": "<strong>海外专利</strong>是指企业在境外国家或地区获得的专利权，用于保护技术创新成果在国际市场上的独占权。专利权同样具有地域性，需在目标国家单独申请。",
+          "categories": "<strong>海外专利申请途径：</strong><br><br>1. <strong>PCT国际申请（专利合作条约）</strong> — 一份申请，30个月内选择进入目标国家，延迟决策时间，节省前期费用<br><br>2. <strong>巴黎公约途径</strong> — 在中国首次申请后12个月内，直接向目标国家申请，可享受优先权<br><br>3. <strong>单一国家直接申请</strong> — 不依赖国内申请，直接在目标国家提交<br><br><strong>主要申请国家/地区：</strong><br>• 美国（USPTO）<br>• 欧洲（EPO，覆盖38国）<br>• 日本（JPO）<br>• 韩国（KIPO）<br>• 印度、东南亚、中东等",
+          "business": "<strong>海外专利业务流程：</strong><br><br>1. <strong>专利检索与评估</strong> — 新颖性、创造性分析<br>2. <strong>申请策略制定</strong> — 选择申请途径和国家<br>3. <strong>申请文件准备</strong> — 翻译、撰写<br>4. <strong>提交申请</strong><br>5. <strong>审查与答复</strong> — 应对审查意见<br>6. <strong>授权与年费管理</strong>"
+        }
+      ]
     }
   ],
   "grants": [
