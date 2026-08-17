@@ -9,50 +9,35 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; }
         .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        
         .header { background: #0a2c5c; color: white; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; margin-bottom: 25px; }
         .header h1 { font-size: 1.6rem; }
         .header a { color: #facc15; text-decoration: none; font-size: 0.9rem; }
-        
         .search-box { display: flex; gap: 10px; margin-bottom: 15px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex-wrap: wrap; }
         .search-box input { flex: 1; min-width: 200px; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 30px; font-size: 1rem; outline: none; }
         .search-box input:focus { border-color: #2563eb; }
         .search-box button { padding: 12px 25px; background: #2563eb; color: white; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer; font-weight: 600; }
-        
-        .search-results { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); margin-bottom: 20px; display: none; }
-        .search-results h3 { color: #0a2c5c; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .search-results .result-item { padding: 10px 14px; border-radius: 10px; margin-bottom: 5px; background: #f8fafc; border-left: 3px solid #2563eb; cursor: pointer; transition: 0.2s; }
-        .search-results .result-item:hover { background: #dbeafe; }
-        .result-item .result-code { color: #94a3b8; font-size: 0.8rem; margin-right: 8px; font-weight: 600; }
-        .result-item .result-name { font-weight: 500; }
-        .result-item .result-class { float: right; color: #2563eb; font-size: 0.8rem; font-weight: 600; }
-        
+        .search-results { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); margin-bottom: 20px; display: none; max-height: 400px; overflow-y: auto; }
+        .search-results h3 { color: #0a2c5c; margin-bottom: 10px; }
+        .result-item { padding: 10px 14px; border-radius: 10px; margin-bottom: 5px; background: #f8fafc; border-left: 3px solid #2563eb; cursor: pointer; transition: 0.2s; }
+        .result-item:hover { background: #dbeafe; }
+        .result-code { color: #94a3b8; font-size: 0.8rem; margin-right: 8px; font-weight: 600; }
+        .result-class { float: right; color: #2563eb; font-size: 0.8rem; font-weight: 600; }
         .stats { text-align: center; margin-bottom: 15px; color: #64748b; font-size: 0.9rem; }
-        .stats span { color: #2563eb; font-weight: 700; }
-        
         .class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
         .class-card { background: white; border-radius: 15px; padding: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.04); border-left: 4px solid #2563eb; cursor: pointer; transition: 0.2s; text-decoration: none; color: inherit; display: block; }
-        .class-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-left-color: #facc15; }
-        .class-card.hidden { display: none; }
+        .class-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .class-card .class-num { font-size: 1.4rem; font-weight: 800; color: #2563eb; margin-bottom: 5px; }
-        .class-card .class-name { font-weight: 600; color: #0a2c5c; margin-bottom: 8px; font-size: 1.05rem; }
-        .class-card .class-examples { color: #64748b; font-size: 0.9rem; line-height: 1.5; }
-        .class-card .class-type { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; }
+        .class-card .class-name { font-weight: 600; color: #0a2c5c; font-size: 1.05rem; }
+        .class-type { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; }
         .type-goods { background: #dbeafe; color: #1e40af; }
         .type-service { background: #fef3c7; color: #92400e; }
-        
-        .no-result { text-align: center; padding: 50px; color: #94a3b8; display: none; }
-        
-        @media (max-width: 600px) {
-            .class-grid { grid-template-columns: 1fr; }
-            .header h1 { font-size: 1.3rem; }
-        }
+        @media (max-width: 600px) { .class-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="header">
         <h1><i class="fas fa-sitemap"></i> 商标注册用商品和服务分类表</h1>
-        <p style="margin-top:8px;opacity:0.9;">基于尼斯分类 | 支持全类目深度搜索</p>
+        <p style="margin-top:8px;opacity:0.9;">支持全类目深度搜索</p>
         <a href="index.html">← 返回首页</a>
     </div>
 
@@ -62,137 +47,136 @@
             <button onclick="searchAll()"><i class="fas fa-search"></i> 搜索</button>
         </div>
         
-        <!-- 搜索结果 -->
         <div class="search-results" id="searchResults">
-            <h3><i class="fas fa-list"></i> 搜索结果 <span id="resultCount" style="font-size:0.8rem;color:#64748b;"></span></h3>
+            <h3><i class="fas fa-list"></i> 搜索结果</h3>
             <div id="resultList"></div>
         </div>
         
-        <div class="stats">共 <span id="totalCount">45</span> 个类别 | 点击类别查看详细小项</div>
-        
+        <div class="stats">共 45 个类别 | 点击类别查看详细小项</div>
         <div class="class-grid" id="classGrid"></div>
-        <div class="no-result" id="noResult">
-            <i class="fas fa-search"></i>
-            <p>未找到匹配的类别，请尝试其他关键词</p>
-        </div>
     </div>
 
     <script>
-        // 类别基础信息
-        const classNames = {1:"化学原料",2:"颜料油漆",3:"日化用品",4:"燃料油脂",5:"医药用品",6:"金属材料",7:"机械设备",8:"手工器械",9:"科学仪器",10:"医疗器械",11:"灯饰空调",12:"运输工具",13:"军火烟火",14:"珠宝钟表",15:"乐器",16:"办公用品",17:"橡胶制品",18:"皮革皮具",19:"建筑材料",20:"家具家居",21:"厨房洁具",22:"绳网袋蓬",23:"纺织用纱",24:"床上用品",25:"服装鞋帽",26:"花边配饰",27:"地毯地垫",28:"玩具体育",29:"肉类食品",30:"面食调味",31:"农林生鲜",32:"啤酒饮料",33:"含酒精酒类",34:"烟草烟具",35:"广告销售",36:"金融物管",37:"建筑修理",38:"通讯服务",39:"运输旅行",40:"材料加工",41:"教育娱乐",42:"科技服务",43:"餐饮住宿",44:"医疗园艺",45:"社会服务"};
-        const classTypes = {};
-        for(let i=1;i<=34;i++) classTypes[i]='goods';
-        for(let i=35;i<=45;i++) classTypes[i]='service';
+        var classNames = {1:"化学原料",2:"颜料油漆",3:"日化用品",4:"燃料油脂",5:"医药用品",6:"金属材料",7:"机械设备",8:"手工器械",9:"科学仪器",10:"医疗器械",11:"灯饰空调",12:"运输工具",13:"军火烟火",14:"珠宝钟表",15:"乐器",16:"办公用品",17:"橡胶制品",18:"皮革皮具",19:"建筑材料",20:"家具家居",21:"厨房洁具",22:"绳网袋蓬",23:"纺织用纱",24:"床上用品",25:"服装鞋帽",26:"花边配饰",27:"地毯地垫",28:"玩具体育",29:"肉类食品",30:"面食调味",31:"农林生鲜",32:"啤酒饮料",33:"含酒精酒类",34:"烟草烟具",35:"广告销售",36:"金融物管",37:"建筑修理",38:"通讯服务",39:"运输旅行",40:"材料加工",41:"教育娱乐",42:"科技服务",43:"餐饮住宿",44:"医疗园艺",45:"社会服务"};
+        var classTypes = {};
+        for(var i=1;i<=34;i++) classTypes[i]='goods';
+        for(var i=35;i<=45;i++) classTypes[i]='service';
 
-        // 从详情页获取完整数据（通过script标签加载）
-        // 注意：详情页使用 window.classData 存储数据，这里我们共享同一份数据
-        // 由于详情页的数据在独立文件中，这里我们直接加载它
-        
-        // 加载详情页数据
-        const script = document.createElement('script');
-        script.src = 'trademark-class-detail.html';
-        script.onload = function() {
-            // 数据已加载到 window.classData 中
-            if (window.classData) {
-                renderClassGrid();
-            }
+        // ========== 搜索数据（从详情页提取的核心关键词数据） ==========
+        // 为了搜索功能，内置每个类别的关键词列表
+        var searchData = {
+            1: ["氨","氮","氢","氧","氦","酸","碱","盐","肥料","工业用化学品","黏合剂","纸浆"],
+            2: ["颜料","油漆","清漆","染料","油墨","防锈剂","着色剂"],
+            3: ["肥皂","洗发水","牙膏","香水","化妆品","口红","面膜","洗衣粉","洗洁精","清洁剂"],
+            4: ["工业用油","润滑油","燃料","蜡烛","除尘剂","汽油","柴油"],
+            5: ["药品","医疗器械","消毒剂","营养品","婴儿食品","维生素","绷带","口罩"],
+            6: ["金属","钢管","铁丝","保险箱","五金","金属门","金属窗","螺丝","锁"],
+            7: ["机器","机床","马达","食品机械","农业机械","打印机","3D打印机","机器人","洗衣机","发电机"],
+            8: ["刀","剪刀","锤子","螺丝刀","剃须刀","指甲刀","餐具"],
+            9: ["手机","电脑","软件","APP","相机","眼镜","电池","充电器","平板","智能手表","耳机","芯片","传感器","GPS","打印机","电视","摄像机","麦克风","望远镜"],
+            10: ["医疗器械","牙科","助听器","口罩","避孕套","血压计","体温计","轮椅"],
+            11: ["灯","灯泡","手电筒","电饭煲","微波炉","冰箱","空调","热水器","风扇","加湿器"],
+            12: ["汽车","电动车","自行车","婴儿车","轮胎","无人机","摩托车","飞机","船"],
+            13: ["枪支","弹药","烟花","爆竹","信号弹"],
+            14: ["珠宝","首饰","手表","钻石","戒指","项链","耳环","黄金","银饰"],
+            15: ["钢琴","吉他","小提琴","鼓","乐器","笛子","二胡"],
+            16: ["纸","书籍","文具","笔记本","笔","文件夹","日历","贴纸"],
+            17: ["橡胶","塑料","绝缘材料","胶带","软管","防水材料"],
+            18: ["箱包","钱包","背包","雨伞","皮带","行李箱","手提包"],
+            19: ["石材","水泥","瓷砖","玻璃","建材","木材","砖","瓦"],
+            20: ["家具","床垫","枕头","镜子","沙发","桌子","椅子","床","衣柜"],
+            21: ["锅","碗","水杯","保温杯","梳子","牙刷","茶具","餐具","筷子"],
+            22: ["绳索","帐篷","编织袋","渔网","帆布"],
+            23: ["纱","线","毛线","丝线","棉线"],
+            24: ["床单","被套","毛巾","浴巾","窗帘","被子","枕套"],
+            25: ["衣服","裤子","裙子","鞋子","帽子","袜子","围巾","T恤","衬衫","外套","羽绒服","内衣","领带"],
+            26: ["纽扣","拉链","发夹","假发","花边","刺绣"],
+            27: ["地毯","地垫","墙纸","体操垫","瑜伽垫"],
+            28: ["玩具","游戏机","健身器材","钓鱼竿","篮球","足球","球拍","积木","滑板"],
+            29: ["肉","鱼","食用油","牛奶","奶酪","果冻","坚果","蛋","火腿","香肠"],
+            30: ["面包","糕点","咖啡","茶","糖","蜂蜜","调味品","方便面","巧克力","冰淇淋","饺子","面条","酱油","醋"],
+            31: ["水果","蔬菜","花卉","树木","宠物食品","饲料","谷物","新鲜水果"],
+            32: ["啤酒","矿泉水","汽水","果汁","奶茶","运动饮料"],
+            33: ["白酒","红酒","葡萄酒","黄酒","洋酒","鸡尾酒"],
+            34: ["香烟","雪茄","电子烟","打火机","火柴","烟灰缸"],
+            35: ["广告","市场营销","推销","电商","商业管理","会计","人事管理"],
+            36: ["银行","保险","贷款","不动产","基金","支付","担保","理财"],
+            37: ["建筑","装修","汽车维修","清洁","电梯安装","防水"],
+            38: ["电信","网络","电视广播","视频会议","电子邮件","5G","宽带"],
+            39: ["物流","快递","旅游","租车","停车场","搬家","仓储"],
+            40: ["打磨","金属处理","印刷","水处理","空气净化"],
+            41: ["教育","培训","学校","健身","出版","演出","游戏","翻译"],
+            42: ["软件开发","网站建设","APP开发","设计","云计算","人工智能","大数据"],
+            43: ["餐厅","酒店","咖啡馆","外卖","养老院","托儿所"],
+            44: ["医院","美容院","理发店","按摩","宠物医院","园艺"],
+            45: ["法律","知识产权","安保","婚介","交友","殡葬"]
         };
-        // 由于HTML文件不能直接作为script加载，我们用fetch方式
-        
-        fetch('trademark-class-detail.html')
-            .then(r => r.text())
-            .then(html => {
-                // 提取classData
-                const match = html.match(/var classData=\{[\s\S]*?\};/);
-                if (match) {
-                    eval(match[0].replace('var classData','window.classData'));
-                    renderClassGrid();
-                }
-            })
-            .catch(() => {
-                // 如果fetch失败，使用简化数据
-                renderClassGrid();
-            });
-        
-        function renderClassGrid() {
-            const grid = document.getElementById('classGrid');
-            let html = '';
-            for(let i=1;i<=45;i++){
-                const examples = window.classData && window.classData[i] ? 
-                    window.classData[i].slice(0,2).map(s=>s.name.replace(/^\d+\s+/,'')).join('、') : '';
-                html += `<a href="trademark-class-detail.html?class=${i}" class="class-card" data-num="${i}">
-                    <span class="class-type ${classTypes[i]==='goods'?'type-goods':'type-service'}">${classTypes[i]==='goods'?'商品':'服务'}</span>
-                    <div class="class-num">第${i}类</div>
-                    <div class="class-name">${classNames[i]}</div>
-                    <div class="class-examples">${examples || '点击查看详情'}</div>
-                </a>`;
+
+        // 渲染类别卡片
+        function renderGrid() {
+            var html = '';
+            for(var i=1;i<=45;i++){
+                html += '<a href="trademark-class-detail.html?class='+i+'" class="class-card">';
+                html += '<span class="class-type '+(classTypes[i]==='goods'?'type-goods':'type-service')+'">'+(classTypes[i]==='goods'?'商品':'服务')+'</span>';
+                html += '<div class="class-num">第'+i+'类</div>';
+                html += '<div class="class-name">'+classNames[i]+'</div>';
+                html += '</a>';
             }
-            grid.innerHTML = html;
-            document.getElementById('totalCount').textContent = 45;
+            document.getElementById('classGrid').innerHTML = html;
         }
-        
+
+        // 搜索函数
         function searchAll() {
-            const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
-            const resultsDiv = document.getElementById('searchResults');
-            const resultList = document.getElementById('resultList');
-            const classGrid = document.getElementById('classGrid');
-            const noResult = document.getElementById('noResult');
+            var keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+            var resultsDiv = document.getElementById('searchResults');
+            var resultList = document.getElementById('resultList');
+            var grid = document.getElementById('classGrid');
             
-            if (!keyword) {
+            if(!keyword) {
                 resultsDiv.style.display = 'none';
-                classGrid.style.display = 'grid';
-                noResult.style.display = 'none';
-                document.querySelectorAll('.class-card').forEach(c => c.classList.remove('hidden'));
+                grid.style.display = 'grid';
                 return;
             }
             
-            // 如果有完整数据，搜索最小项
-            if (window.classData) {
-                let results = [];
-                for(let c=1;c<=45;c++){
-                    if(!window.classData[c]) continue;
-                    window.classData[c].forEach(sub => {
-                        sub.items.forEach(item => {
-                            const name = item[1] || '';
-                            const code = item[0] || '';
-                            if(name.toLowerCase().includes(keyword) || code.includes(keyword)) {
-                                results.push({classNum:c, className:classNames[c], code:code, name:name});
-                            }
-                        });
+            var results = [];
+            for(var c=1;c<=45;c++){
+                if(searchData[c]) {
+                    searchData[c].forEach(function(item){
+                        if(item.toLowerCase().indexOf(keyword) > -1) {
+                            results.push({classNum:c, name:item});
+                        }
                     });
                 }
-                
-                if(results.length > 0) {
-                    resultsDiv.style.display = 'block';
-                    resultList.innerHTML = results.slice(0,50).map(r => `
-                        <div class="result-item" onclick="location.href='trademark-class-detail.html?class=${r.classNum}'">
-                            <span class="result-code">${r.code}</span>
-                            <span class="result-name">${r.name}</span>
-                            <span class="result-class">第${r.classNum}类</span>
-                        </div>
-                    `).join('');
-                    document.getElementById('resultCount').textContent = `(${results.length}个匹配)`;
-                    classGrid.style.display = 'none';
-                    noResult.style.display = 'none';
-                } else {
-                    resultsDiv.style.display = 'none';
-                    classGrid.style.display = 'grid';
-                    noResult.style.display = 'block';
+                // 也搜索类别名
+                if(classNames[c] && classNames[c].indexOf(keyword) > -1) {
+                    results.push({classNum:c, name:classNames[c]});
                 }
-            } else {
-                // 数据未加载完成，只搜索类别名称
-                classGrid.style.display = 'grid';
-                resultsDiv.style.display = 'none';
-                document.querySelectorAll('.class-card').forEach(card => {
-                    const name = classNames[card.getAttribute('data-num')].toLowerCase();
-                    if(name.includes(keyword)) { card.classList.remove('hidden'); }
-                    else { card.classList.add('hidden'); }
+            }
+            
+            if(results.length > 0) {
+                // 去重
+                var uniqueResults = [];
+                var seen = {};
+                results.forEach(function(r){
+                    var key = r.classNum + '-' + r.name;
+                    if(!seen[key]) { seen[key] = true; uniqueResults.push(r); }
                 });
+                
+                resultsDiv.style.display = 'block';
+                resultList.innerHTML = uniqueResults.slice(0,50).map(function(r){
+                    return '<div class="result-item" onclick="location.href=\'trademark-class-detail.html?class='+r.classNum+'\'">' +
+                           '<span class="result-class">第'+r.classNum+'类 '+classNames[r.classNum]+'</span>' +
+                           '<span class="result-name">'+r.name+'</span>' +
+                           '</div>';
+                }).join('');
+                grid.style.display = 'none';
+            } else {
+                resultsDiv.style.display = 'none';
+                grid.style.display = 'grid';
             }
         }
-        
-        // 初始渲染
-        renderClassGrid();
+
+        renderGrid();
     </script>
 </body>
 </html>
